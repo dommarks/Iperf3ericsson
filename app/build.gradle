@@ -10,6 +10,15 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+        ndk {
+            moduleName "ndkLib"
+            //moduleName "iperf"
+        }
+    }
+    //use our own mk file
+    sourceSets.main {
+        jni.srcDirs = []//ndk-build.cmd needs to be invoked from cmd
+        jniLibs.srcDir 'src/main/libs'
     }
     buildTypes {
         release {
