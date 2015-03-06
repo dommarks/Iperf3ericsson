@@ -15,7 +15,7 @@ public class MainActivity extends Activity {
 	
 	
 
-	public native String runIperf();
+	public native void runIperf();
 	
 	
 
@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-		android.os.Debug.waitForDebugger();
+		//android.os.Debug.waitForDebugger();
 
 		setContentView(R.layout.activity_main);
 		
@@ -32,10 +32,8 @@ public class MainActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-
-        		String outputString = runIperf();
-     //   		Log.w("OUTPUTSTRING","Output string = "+outputString);
-        		//tv.setText(outputString);
+        	       runIperf();
+        	       tv.setText("success");
             }
         });
 	}
