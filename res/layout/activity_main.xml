@@ -15,12 +15,23 @@
         android:text="@string/hello_world" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/drawGraphButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/runTestButton"
+        android:layout_alignBottom="@+id/runTestButton"
+        android:layout_marginLeft="59dp"
+        android:layout_toRightOf="@+id/runTestButton"
+        android:text="@string/Draw_Graph" />
+
+    <Button
+        android:id="@+id/runTestButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mainTV"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="41dp"
+        android:layout_marginLeft="29dp"
         android:text="@string/Run_iPerf_English" />
 
 </RelativeLayout>

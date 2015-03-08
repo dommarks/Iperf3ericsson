@@ -18,7 +18,7 @@ JNIEXPORT void JNICALL Java_vigroid_iperf3ericsson_MainActivity_runIperf(JNIEnv*
 {
 
 	//char *result=(char *)malloc(100);
-	FILE *file = fopen("/sdcard/iPerfResult.txt","w+");
+	FILE *file = fopen("/sdcard/iPerfResult.json","w+");
     char **argv;
     int argc=3;
     char* argv0;

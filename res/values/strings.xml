@@ -2,8 +2,9 @@
 <resources>
 
     <string name="app_name">iPerf3Ericsson</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">This is Spar...Hello world!!</string>
     <string name="action_settings">Settings</string>
     <string name="Run_iPerf_English">Run Test!</string>
+    <string name="Draw_Graph">Draw</string>
 
 </resources>
