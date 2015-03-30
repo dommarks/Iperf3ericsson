@@ -23,7 +23,8 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 	
 	
-	
+	double latitude = 0;
+	double longitude = 0;
 	
 
 	public native void runIperf();
@@ -35,7 +36,9 @@ public class MainActivity extends Activity {
 		
 		super.onCreate(savedInstanceState);
 		//android.os.Debug.waitForDebugger();
-
+		final LocationHelper loc = new LocationHelper(getApplicationContext());
+		loc.getLocation();
+		
 		setContentView(R.layout.activity_main);
 		
 		final TextView tv = (TextView) findViewById(R.id.mainTV);
@@ -43,7 +46,10 @@ public class MainActivity extends Activity {
 		run_iPerf_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
+            	loc.getLocation();
         	       runIperf();
+        	       latitude = loc.getLatitude();
+        	       longitude = loc.getLongitude();
         	       tv.setText("success");
             }
         });
