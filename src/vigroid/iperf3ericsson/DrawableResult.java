@@ -20,11 +20,13 @@ import android.view.View;
 
 
 public class DrawableResult extends TestResult{
+	
+	private Context context;
 
 	public DrawableResult(String defaultunit, String fileLocation, Context context) {
 		super(defaultunit, fileLocation, context);
 		// TODO Auto-generated constructor stub
-		
+		this.context = context;
 	}
 	
 	public View DrawChart(Context context ) throws JSONException{

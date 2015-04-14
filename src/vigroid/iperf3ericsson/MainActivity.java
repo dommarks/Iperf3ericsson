@@ -34,7 +34,9 @@ public class MainActivity extends Activity {
         	       //tv.setText("success");
         	       
         	       //After IPerf runs, a TestResult object should be created
+        	       //   if (CODE INDICATING IPERF RAN SUCCESSFULLY){
         	       TestResult tr = new TestResult("KB/s", "sdcard/iPerfResult.json",MainActivity.this);
+        	       tr.createDetailResult();
         	       
             }
         });
@@ -44,21 +46,21 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-//				try {
-//
-//					//initialize DrawableResult
-//	        	    iPerfResultMain = new DrawableResult("KB/s", "sdcard/iPerfResult.json");
-//					mChartView = iPerfResultMain.DrawChart(MainActivity.this);
-//					//this part is used to display graph on the xml
-//					LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart);
-//					//remove any views before u paint the chart
-//					chartContainer.removeAllViews();
-//					//adding the view to the linearlayout
-//					chartContainer.addView(mChartView);
-//				} catch (JSONException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+				try {
+
+					//initialize DrawableResult
+	        	    iPerfResultMain = new DrawableResult("KB/s", "sdcard/iPerfResult.json", MainActivity.this);
+					mChartView = iPerfResultMain.DrawChart(MainActivity.this);
+					//this part is used to display graph on the xml
+					LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart);
+					//remove any views before u paint the chart
+					chartContainer.removeAllViews();
+					//adding the view to the linearlayout
+					chartContainer.addView(mChartView);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
