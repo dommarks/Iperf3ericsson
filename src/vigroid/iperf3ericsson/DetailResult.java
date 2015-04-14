@@ -2,15 +2,21 @@ package vigroid.iperf3ericsson;
 
 import java.security.Timestamp;
 
+import android.content.Context;
 import android.view.View;
 
 public class DetailResult {
-//TODO at database support here (wait read)
+
+	private Context context;
+	
+	/*
+	 * Test result variables
+	 */
 	private String connectionType;
 	private String carrierName;
 	private String IMEINumber;
 	private String modelNumber;
-	private Timestamp timestamp; // or long type
+	private long timestamp; // or long type
 	private double longtitude;
 	private double latitude; // or Location type
 	private String ServerName;
@@ -20,6 +26,46 @@ public class DetailResult {
 	private long pingTime;
 	private double CpuUtilization;
 	private String IpAddress;
+
+	
+	/**
+	 * Constructor for DetailResult object.
+	 * This holds the data for a specific iperf test.
+	 */
+
+	public DetailResult(Context context, String connectionType, String carrierName,
+			String iMEINumber, String modelNumber, long timestamp,
+			double longtitude, double latitude, String serverName,
+			String portNumber, double averageSpeed, double dataPayloadSize,
+			long pingTime, double cpuUtilization, String ipAddress) {
+		super();
+		this.context = context;
+		this.connectionType = connectionType;
+		this.carrierName = carrierName;
+		this.IMEINumber = iMEINumber;
+		this.modelNumber = modelNumber;
+		this.timestamp = timestamp;
+		this.longtitude = longtitude;
+		this.latitude = latitude;
+		this.ServerName = serverName;
+		this.portNumber = portNumber;
+		this.averageSpeed = averageSpeed;
+		this.dataPayloadSize = dataPayloadSize;
+		this.pingTime = pingTime;
+		this.CpuUtilization = cpuUtilization;
+		this.IpAddress = ipAddress;
+	}
+	
+	
+	/**
+	 * Adds this object to the database
+	 * TODO add handling to prevent duplicate records from being entered
+	 */
+	public void addToDB(){
+		IPerfDB db = new IPerfDB(context);
+		db.insertTestRecord(this);		
+	}
+	
 	
 	//TODO add upload method which upload database entries to Ericsson server, when click the upload button on DetailActivity
 	public void DBUploadEntries(){
@@ -77,11 +123,11 @@ public class DetailResult {
 		this.modelNumber = modelNumber;
 	}
 
-	public Timestamp getTimestamp() {
+	public long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Timestamp timestamp) {
+	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
 	}
 

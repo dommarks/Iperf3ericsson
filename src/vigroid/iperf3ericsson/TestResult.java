@@ -8,6 +8,8 @@ import java.nio.charset.Charset;
 
 import org.json.JSONObject;
 
+import android.content.Context;
+
 public class TestResult {
 	//TODO could change to private, depends
 	protected JSONObject JSONResult;
@@ -16,17 +18,49 @@ public class TestResult {
 	protected String unit;
 	public Boolean isEmpty;
 	
+	private Context context;
+	
+	/*
+	 * Variables for the test result
+	 */
+	private String connectionType;
+	private String carrierName;
+	private String IMEINumber;
+	private String modelNumber;
+	private long timestamp; // or long type
+	private double longtitude;
+	private double latitude; // or Location type
+	private String ServerName;
+	private String portNumber;
+	private double averageSpeed;
+	private double dataPayloadSize;
+	private long pingTime;
+	private double CpuUtilization;
+	private String IpAddress;
 	
 	
-	public TestResult(String defaultunit, String fileLocation) {
+	
+	public TestResult(String defaultunit, String fileLocation, Context context) {
 		super();
 		this.unit = defaultunit;
 		this.JSONFile= new File(fileLocation);
 		this.isEmpty=true;
-		if(fetchJSONData())
-			this.isEmpty=false;
+		if(fetchJSONData()){
+			this.isEmpty=false;}
+		
+		/*
+		 * 
+		 * Code goes here to set the above variables such as carrierName...IMEINumber...and so on
+		 * 
+		 */
+		
+		//Creates DetailResult and adds to DB if the variables have been populated (carrierName is used as an example)
+		if (carrierName!=null){
+		createDetailResult();
+		}
 		
 	}
+
 
 	public Boolean fetchJSONData(){
 		if(this.JSONFile==null)
@@ -58,6 +92,19 @@ public class TestResult {
 		
 	}
 
+	/**
+	 * Creates DetailResult object from JSON object
+	 * @param jobj
+	 */
+	public void createDetailResult(){
+		
+		///Code to create a DetailResult object and add it to the database
+		DetailResult dr = new DetailResult(context, connectionType, carrierName,IMEINumber, modelNumber, timestamp,
+				longtitude, latitude,ServerName,portNumber, averageSpeed, dataPayloadSize,pingTime, CpuUtilization, IpAddress);
+		
+		dr.addToDB();
+		
+	}
 	public JSONObject getJSONResult() {
 		return JSONResult;
 	}

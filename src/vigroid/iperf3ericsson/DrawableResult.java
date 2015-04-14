@@ -21,8 +21,8 @@ import android.view.View;
 
 public class DrawableResult extends TestResult{
 
-	public DrawableResult(String defaultunit, String fileLocation) {
-		super(defaultunit, fileLocation);
+	public DrawableResult(String defaultunit, String fileLocation, Context context) {
+		super(defaultunit, fileLocation, context);
 		// TODO Auto-generated constructor stub
 		
 	}
@@ -137,7 +137,7 @@ public class DrawableResult extends TestResult{
 		  //Setting background color of the graph to transparent
 		  multiRenderer.setBackgroundColor(Color.TRANSPARENT);
 		  //Setting margin color of the graph to transparent
-		  multiRenderer.setMarginsColor(context.getResources().getColor(R.color.transparent_background));
+		  multiRenderer.setMarginsColor(Color.GREEN);
 		  multiRenderer.setApplyBackgroundColor(true);
 
 		  //setting the margin size for the graph in the order top, left, bottom, right
