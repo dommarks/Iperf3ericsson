@@ -9,6 +9,7 @@ import java.nio.charset.Charset;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Log;
 
 public class TestResult {
 	//TODO could change to private, depends
@@ -63,6 +64,7 @@ public class TestResult {
 
 
 	public Boolean fetchJSONData(){
+		Log.w("IPERF","fetchJASONData()");
 		try	{
 			//TODO consider take a variable instead of a fixed path
             FileInputStream stream = new FileInputStream(JSONFile);
@@ -100,7 +102,7 @@ public class TestResult {
 	public void createDetailResult(){
 		
 		///Code to create a DetailResult object and add it to the database
-		DetailResult dr = new DetailResult(context, connectionType, carrierName,IMEINumber, modelNumber, timestamp,
+		TestResultDetails dr = new TestResultDetails(context, connectionType, carrierName,IMEINumber, modelNumber, timestamp,
 				longtitude, latitude,ServerName,portNumber, averageSpeed, dataPayloadSize,pingTime, CpuUtilization, IpAddress);
 		
 		dr.addToDB();

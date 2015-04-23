@@ -3,6 +3,7 @@ package vigroid.iperf3ericsson;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,9 +20,7 @@ public class MainActivity extends Activity {
 private View  mChartView;
 	
 	private Spinner graphSpinner;
-	
 	DrawableResult iPerfResultMain;
-
 	public native String runIperf(String host,int portNum);
 
 	@Override
@@ -33,14 +32,29 @@ private View  mChartView;
 		setContentView(R.layout.activity_main);
 		
 		graphSpinner = (Spinner) findViewById(R.id.graph_select_spinner);
+		Button previous_tests_button = (Button) findViewById(R.id.previousTestButton);
+		previous_tests_button.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+					Intent myIntent = new Intent(MainActivity.this, PreviousTests.class);
+					//myIntent.putExtra("key", value); //Optional parameters
+					MainActivity.this.startActivity(myIntent);
+			}});
 		
 		Button draw_Graph_button = (Button) findViewById(R.id.drawGraphButton);
 		draw_Graph_button.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), runIperf("iperf.scottlinux.com",5201),
-						   Toast.LENGTH_LONG).show(); 
+//				Toast.makeText(getApplicationContext(), runIperf("iperf.scottlinux.com",5201),
+//						   Toast.LENGTH_LONG).show(); 
+				
+				////TESTING DB
+					TestResultDetails tr = new TestResultDetails(MainActivity.this);
+					tr.addToDB();
+					
+					
 					//initialize DrawableResult
 	        	    iPerfResultMain = new DrawableResult("KB/s", "sdcard/iPerfResult.json",MainActivity.this);
 	        	    if(iPerfResultMain != null && !iPerfResultMain.isEmpty )
