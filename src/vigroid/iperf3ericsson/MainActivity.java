@@ -32,22 +32,6 @@ private View  mChartView;
 
 		setContentView(R.layout.activity_main);
 		
-		//final TextView tv = (TextView) findViewById(R.id.mainTV);
-//		Button run_iPerf_button = (Button) findViewById(R.id.runTestButton);
-//		run_iPerf_button.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                // Perform action on click
-//        	       runIperf();
-//        	       //tv.setText("success");
-//        	       
-//        	       //After IPerf runs, a TestResult object should be created
-//        	       //   if (CODE INDICATING IPERF RAN SUCCESSFULLY){
-//        	       TestResult tr = new TestResult("KB/s", "sdcard/iPerfResult.json",MainActivity.this);
-//        	       tr.createDetailResult();
-//        	       
-//            }
-//        });
-		
 		graphSpinner = (Spinner) findViewById(R.id.graph_select_spinner);
 		
 		Button draw_Graph_button = (Button) findViewById(R.id.drawGraphButton);
@@ -80,31 +64,6 @@ private View  mChartView;
 				
 			}
 		});
-
-////		Button draw_Graph_button = (Button) findViewById(R.id.chart);
-//		draw_Graph_button.setOnClickListener(new View.OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				try {
-//
-//					//initialize DrawableResult
-//	        	    iPerfResultMain = new DrawableResult("KB/s", "sdcard/iPerfResult.json", MainActivity.this);
-//					mChartView = iPerfResultMain.DrawChart(MainActivity.this);
-//					//this part is used to display graph on the xml
-//					LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart);
-//					//remove any views before u paint the chart
-//					chartContainer.removeAllViews();
-//					//adding the view to the linearlayout
-//					chartContainer.addView(mChartView);
-//				} catch (JSONException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//		
-//	
 		}
 
 	@Override
