@@ -39,7 +39,6 @@ public class PreviousTests extends Activity {
 
         }
 
-        //db.getAllTests();
         
         Log.w("IPERF","Number of tests = "+Integer.toString(db.getNumberOfTestsRun()));
         //Log.w("IPERF",db.getTestResultByID(10000000).toString());
@@ -52,7 +51,7 @@ public class PreviousTests extends Activity {
 		
 		gridView = (GridView) findViewById(R.id.gridView1);
         gridView.setAdapter(adapter);
-//
+
 //        gridView.setOnTouchListener(new setOnTouchListener() {
 //            public void onItemClick(AdapterView<?> parent, View v,
 //                int position, long id) {

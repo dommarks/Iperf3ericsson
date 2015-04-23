@@ -19,7 +19,7 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "iPerfDB";
 
 	//DB Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     //DB Name
     static final String dbName="SpeedTestDB";

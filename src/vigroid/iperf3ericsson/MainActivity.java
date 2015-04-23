@@ -47,18 +47,19 @@ private View  mChartView;
 
 			@Override
 			public void onClick(View v) {
-//				Toast.makeText(getApplicationContext(), runIperf("iperf.scottlinux.com",5201),
-//						   Toast.LENGTH_LONG).show(); 
-				
+				Toast.makeText(getApplicationContext(), runIperf("iperf.scottlinux.com",5201),
+						   Toast.LENGTH_LONG).show(); 
 				////TESTING DB
-					TestResultDetails tr = new TestResultDetails(MainActivity.this);
-					tr.addToDB();
+//					TestResultDetails tr = new TestResultDetails(MainActivity.this);
+//					tr.addToDB();
 					
 					
 					//initialize DrawableResult
-	        	    iPerfResultMain = new DrawableResult("KB/s", "sdcard/iPerfResult.json",MainActivity.this);
-	        	    if(iPerfResultMain != null && !iPerfResultMain.isEmpty )
+	        	    iPerfResultMain = new DrawableResult("KB/s", "sdcard/iPerfResult.json",getBaseContext());
+	        	    if(iPerfResultMain != null && !iPerfResultMain.isEmpty ){
 	        	    	chartUpdate(graphSpinner.getSelectedItemId());
+	        	    	TestResult tr = new TestResult("KB/s", "sdcard/iPerfResult.json",getBaseContext());
+	        	    	tr.createDetailResult();}
 			}
 		});	
 		

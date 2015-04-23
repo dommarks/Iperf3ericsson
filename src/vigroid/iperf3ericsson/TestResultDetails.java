@@ -109,6 +109,9 @@ public class TestResultDetails {
 	
 	//Getters and Setter
 	
+	public void setContext(Context context){
+		this.context = context;
+	}
 	public String getConnectionType() {
 		return connectionType;
 	}

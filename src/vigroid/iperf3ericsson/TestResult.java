@@ -6,9 +6,12 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 public class TestResult {
@@ -38,11 +41,12 @@ public class TestResult {
 	private long pingTime;
 	private double CpuUtilization;
 	private String IpAddress;
-	
+
 	
 	
 	public TestResult(String defaultunit, String fileLocation, Context context) {
 //		super();
+		this.context = context;
 		this.unit = defaultunit;
 		this.JSONFile= new File(fileLocation);
 		this.isEmpty=true;
@@ -56,9 +60,9 @@ public class TestResult {
 		 */
 		
 		//Creates DetailResult and adds to DB if the variables have been populated (carrierName is used as an example)
-		if (carrierName!=null){
-		createDetailResult();
-		}
+//		if (carrierName!=null){
+//		createDetailResult();
+//		}
 		
 	}
 
@@ -81,6 +85,7 @@ public class TestResult {
             }
             if (jsonStr.length()>1) {
             	this.JSONResult = new JSONObject(jsonStr);
+            	Log.w("IPERF","JSON string = "+jsonStr);
             	return true;
 			}
            
@@ -96,18 +101,61 @@ public class TestResult {
 	}
 
 	/**
-	 * Creates DetailResult object from JSON object
+	 * Creates DetailResult object from JSON object, adds to database
 	 * @param jobj
 	 */
 	public void createDetailResult(){
+		TestResultDetails dr = new TestResultDetails();
 		
-		///Code to create a DetailResult object and add it to the database
-		TestResultDetails dr = new TestResultDetails(context, connectionType, carrierName,IMEINumber, modelNumber, timestamp,
-				longtitude, latitude,ServerName,portNumber, averageSpeed, dataPayloadSize,pingTime, CpuUtilization, IpAddress);
 		
+		
+		//Setting timestamp
+		dr.setTimestamp(System.currentTimeMillis());
+		
+		LocationHelper lh = new LocationHelper(context);
+//		lh.getLocation();
+		
+		//Getting network connection type
+//		dr.setConnectionType(lh.getNetworkClassName(context));
+		dr.setConnectionType("4G");
+		
+		//Setting carrier name
+//		dr.setCarrierName(LocationHelper.CarrierName);
+		dr.setCarrierName("CARRIER NAME");
+		
+		//Setting IMEI number
+//		dr.setIMEINumber(LocationHelper.IMEINumber);
+		dr.setIMEINumber("IMEI NUMBER");
+		
+		//Setting device name
+//		dr.setModelNumber(LocationHelper.DEVICE_NAME);
+		dr.setModelNumber("MODEL NUMBER");
+		
+		//Setting location
+//		dr.setLatitude(lh.getLatitude());
+//		dr.setLongtitude(lh.getLongitude());
+		
+		dr.setLatitude(30000);
+		dr.setLongtitude(20304);
+		
+		///Adding data from iperf test
+//			dr.setServerName(jo.getString(ServerName));
+//			dr.setDataPayloadSize(jo.getInt(name));
+//			dr.setPingTime(jo.optLong(pingTime));
+			dr.setServerName("SERVER NAME HERE");
+			dr.setDataPayloadSize(25);
+			dr.setPingTime(30202020);
+			dr.setCpuUtilization(30040302);
+			dr.setIpAddress("THIS IS AN IP ADDRESS");
+			dr.setPortNumber("3040");
+			dr.setAverageSpeed(4000);
+
+		dr.setContext(context);
 		dr.addToDB();
 		
 	}
+	
+	
 	public JSONObject getJSONResult() {
 		return JSONResult;
 	}
