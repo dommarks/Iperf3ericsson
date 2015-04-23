@@ -41,7 +41,7 @@ public class TestResult {
 	
 	
 	public TestResult(String defaultunit, String fileLocation, Context context) {
-		super();
+//		super();
 		this.unit = defaultunit;
 		this.JSONFile= new File(fileLocation);
 		this.isEmpty=true;
@@ -63,9 +63,6 @@ public class TestResult {
 
 
 	public Boolean fetchJSONData(){
-		if(this.JSONFile==null)
-			return false;
-		// Read JSON file from SDcard and Display it
 		try	{
 			//TODO consider take a variable instead of a fixed path
             FileInputStream stream = new FileInputStream(JSONFile);
@@ -80,9 +77,13 @@ public class TestResult {
             finally {
             	stream.close();
             }
-            
-            this.JSONResult = new JSONObject(jsonStr);
-
+            if (jsonStr.length()>1) {
+            	this.JSONResult = new JSONObject(jsonStr);
+            	return true;
+			}
+           
+			else
+				return false;
           
 		}
 		catch (Exception e) {

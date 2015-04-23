@@ -3,10 +3,12 @@ package vigroid.iperf3ericsson;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.BarChart.Type;
+import org.achartengine.chart.PointStyle;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer.FillOutsideLine;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,16 +22,14 @@ import android.view.View;
 
 
 public class DrawableResult extends TestResult{
-	
-	private Context context;
 
 	public DrawableResult(String defaultunit, String fileLocation, Context context) {
 		super(defaultunit, fileLocation, context);
 		// TODO Auto-generated constructor stub
-		this.context = context;
+		
 	}
 	
-	public View DrawChart(Context context ) throws JSONException{
+	public View DrawChart(Context context, int graphID) throws JSONException{
 		
 		if(isEmpty)
 			return null;
@@ -40,17 +40,22 @@ public class DrawableResult extends TestResult{
         //looping through All nodes in interval array
         for (int i = 0; i < intervalArray.length(); i++) {
         	JSONObject speedNode = intervalArray.getJSONObject(i).getJSONObject("sum");
-        	// get the data we need from json file
+        	// get the data we need from JSON file
         	nodeValue = speedNode.getString("bits_per_second");
-        	//convert String to double
-        	speed[i]=((double) Double.valueOf(nodeValue).longValue())/8000;
+        	//convert String to double, and keep two digits
+        	double temp=((double) Double.valueOf(nodeValue).longValue())/8192;
+        	speed[i]=((int)(temp*100))/100.0;
+        	
         }
         
         // Show data on the user interface
 
-		String[] mInterval = new String[] {
-				"Time1","Time2","Time3","Time4","Time5"
-		};
+		String[] mInterval = new String[intervalArray.length()];
+		for(int i=0;i<intervalArray.length();i++){
+			
+			mInterval[i] = "Time" + Integer.toString(i);
+		}
+		
 		double maxValue=speed[0];
 
 		for (int i=1;i<speed.length;i++){
@@ -95,7 +100,7 @@ public class DrawableResult extends TestResult{
 		  //setting zoom buttons visibility
 		  multiRenderer.setZoomButtonsVisible(false);
 		  //setting pan inability which uses graph to move on both axis
-		  multiRenderer.setPanEnabled(false, false);
+		  multiRenderer.setPanEnabled(true, false);
 		  //setting click false on graph
 		  multiRenderer.setClickEnabled(false);
 		  //setting zoom to false on both axis
@@ -107,7 +112,7 @@ public class DrawableResult extends TestResult{
 		  //setting legend to fit the screen size
 		  multiRenderer.setFitLegend(true);
 		  //setting displaying line on grid
-		  multiRenderer.setShowGrid(false);
+		  multiRenderer.setShowGrid(true);
 		  //setting zoom to false
 		  multiRenderer.setZoomEnabled(false);
 		  //setting external zoom functions to false
@@ -129,7 +134,7 @@ public class DrawableResult extends TestResult{
 		  // setting y axis max value, Since i'm using static values inside the graph so i'm setting y max value to 4000.
 		  // if you use dynamic values then get the max y value and set here
 		  multiRenderer.setYAxisMin(0);
-		  multiRenderer.setYAxisMax(maxValue);
+		  multiRenderer.setYAxisMax(maxValue+50);
 		  //setting used to move the graph on xaxiz to .5 to the right
 		  multiRenderer.setXAxisMin(-0.5);
 		 //setting max values to be display in x axis
@@ -137,13 +142,16 @@ public class DrawableResult extends TestResult{
 		  //setting bar size or space between two bars
 		  multiRenderer.setBarSpacing(0.5);
 		  //Setting background color of the graph to transparent
-		  multiRenderer.setBackgroundColor(Color.TRANSPARENT);
+		  multiRenderer.setBackgroundColor(Color.GRAY);
 		  //Setting margin color of the graph to transparent
-		  multiRenderer.setMarginsColor(Color.GREEN);
+		  multiRenderer.setMarginsColor(context.getResources().getColor(R.color.transparent_background));
 		  multiRenderer.setApplyBackgroundColor(true);
 
 		  //setting the margin size for the graph in the order top, left, bottom, right
 		  multiRenderer.setMargins(new int[]{30, 30, 30, 30});
+		  multiRenderer.setPointSize(7f);
+
+
 
 		  for(int i=0; i< mInterval.length;i++){
 			  multiRenderer.addXTextLabel(i, mInterval[i]);
@@ -155,13 +163,39 @@ public class DrawableResult extends TestResult{
 		  XYSeriesRenderer speedRenderer = new 
 					  XYSeriesRenderer();
 		  //customize the speedRenderer
+		  speedRenderer.setChartValuesTextSize(24);
 		  speedRenderer.setFillPoints(true);
 		  speedRenderer.setLineWidth(2);
 		  speedRenderer.setDisplayChartValues(true);
 		  speedRenderer.setDisplayChartValuesDistance(10);
+		  speedRenderer.setPointStyle(PointStyle.SQUARE);
+		  
+		//setting if it is area chart or just line chart
+		  if(graphID==3){
+			  FillOutsideLine fill = new FillOutsideLine(FillOutsideLine.Type.BOUNDS_ALL);
+		  	  fill.setColor(Color.GREEN);
+		  	  speedRenderer.addFillOutsideLine(fill);
+		  }
 		  multiRenderer.addSeriesRenderer(speedRenderer);
 		  
-		  return  ChartFactory.getBarChartView(context, speedDataset, multiRenderer,Type.DEFAULT);
+		  switch (graphID) {
+		  	case 0:
+		  		return ChartFactory.getBarChartView(context, speedDataset, multiRenderer,Type.DEFAULT);
+		  	case 1:
+		  		return ChartFactory.getLineChartView(context, speedDataset, multiRenderer);
+		  	case 2:
+		  		return ChartFactory.getCubeLineChartView(context, speedDataset, multiRenderer, 0.25f);
+		  	case 3:
+		  		return ChartFactory.getCubeLineChartView(context, speedDataset, multiRenderer, 0.25f);
+		  	case 4:
+		  		//TODO delete
+		  		return ChartFactory.getTimeChartView(context, speedDataset, multiRenderer, "dd-MMM-yyyy");
+		  	case 5:
+		  		//TODO dialchart
+		  		return ChartFactory.getTimeChartView(context, speedDataset, multiRenderer, "dd-MMM-yyyy");
+		  	default:
+		  		return  ChartFactory.getBarChartView(context, speedDataset, multiRenderer,Type.DEFAULT);
+			}
 	}
 
 }

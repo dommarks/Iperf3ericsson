@@ -7,31 +7,30 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="vigroid.iperf3ericsson.MainActivity" >
-
-    <TextView
-        android:id="@+id/mainTV"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/graph_select_spinner"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:entries="@array/graph_type_arrays"
+        android:prompt="@string/grape_type_prompt" />
+    
+ 	<LinearLayout
+ 	android:id="@+id/chart"
+ 	android:layout_width="match_parent"
+ 	android:layout_height="wrap_content"
+ 	android:layout_alignParentLeft="true"
+ 	android:layout_below="@+id/graph_select_spinner"
+ 	android:layout_above="@+id/drawGraphButton"
+ 	tools:ignore="Orientation" >
+
+	</LinearLayout>
 
     <Button
         android:id="@+id/drawGraphButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/runTestButton"
-        android:layout_alignBottom="@+id/runTestButton"
-        android:layout_marginLeft="59dp"
-        android:layout_toRightOf="@+id/runTestButton"
-        android:text="@string/Draw_Graph" />
-
-    <Button
-        android:id="@+id/runTestButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/mainTV"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="41dp"
-        android:layout_marginLeft="29dp"
-        android:text="@string/Run_iPerf_English" />
+        android:layout_centerHorizontal="true"
+        android:text="@string/run_iperf_button" />
 
 </RelativeLayout>

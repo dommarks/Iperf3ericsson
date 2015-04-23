@@ -7,15 +7,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
-	private View  mChartView;
+private View  mChartView;
+	
+	private Spinner graphSpinner;
+	
 	DrawableResult iPerfResultMain;
 
-	public native void runIperf();
+	public native String runIperf(String host,int portNum);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,45 +33,79 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		//final TextView tv = (TextView) findViewById(R.id.mainTV);
-		Button run_iPerf_button = (Button) findViewById(R.id.runTestButton);
-		run_iPerf_button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-        	       runIperf();
-        	       //tv.setText("success");
-        	       
-        	       //After IPerf runs, a TestResult object should be created
-        	       //   if (CODE INDICATING IPERF RAN SUCCESSFULLY){
-        	       TestResult tr = new TestResult("KB/s", "sdcard/iPerfResult.json",MainActivity.this);
-        	       tr.createDetailResult();
-        	       
-            }
-        });
+//		Button run_iPerf_button = (Button) findViewById(R.id.runTestButton);
+//		run_iPerf_button.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                // Perform action on click
+//        	       runIperf();
+//        	       //tv.setText("success");
+//        	       
+//        	       //After IPerf runs, a TestResult object should be created
+//        	       //   if (CODE INDICATING IPERF RAN SUCCESSFULLY){
+//        	       TestResult tr = new TestResult("KB/s", "sdcard/iPerfResult.json",MainActivity.this);
+//        	       tr.createDetailResult();
+//        	       
+//            }
+//        });
+		
+		graphSpinner = (Spinner) findViewById(R.id.graph_select_spinner);
 		
 		Button draw_Graph_button = (Button) findViewById(R.id.drawGraphButton);
 		draw_Graph_button.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				try {
-
+				Toast.makeText(getApplicationContext(), runIperf("iperf.scottlinux.com",5201),
+						   Toast.LENGTH_LONG).show(); 
 					//initialize DrawableResult
-	        	    iPerfResultMain = new DrawableResult("KB/s", "sdcard/iPerfResult.json", MainActivity.this);
-					mChartView = iPerfResultMain.DrawChart(MainActivity.this);
-					//this part is used to display graph on the xml
-					LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart);
-					//remove any views before u paint the chart
-					chartContainer.removeAllViews();
-					//adding the view to the linearlayout
-					chartContainer.addView(mChartView);
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+	        	    iPerfResultMain = new DrawableResult("KB/s", "sdcard/iPerfResult.json",MainActivity.this);
+	        	    if(iPerfResultMain != null && !iPerfResultMain.isEmpty )
+	        	    	chartUpdate(graphSpinner.getSelectedItemId());
+			}
+		});	
+		
+		graphSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				if(iPerfResultMain != null && !iPerfResultMain.isEmpty )
+					chartUpdate(graphSpinner.getSelectedItemId());
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
-		
-	}
+
+////		Button draw_Graph_button = (Button) findViewById(R.id.chart);
+//		draw_Graph_button.setOnClickListener(new View.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				try {
+//
+//					//initialize DrawableResult
+//	        	    iPerfResultMain = new DrawableResult("KB/s", "sdcard/iPerfResult.json", MainActivity.this);
+//					mChartView = iPerfResultMain.DrawChart(MainActivity.this);
+//					//this part is used to display graph on the xml
+//					LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart);
+//					//remove any views before u paint the chart
+//					chartContainer.removeAllViews();
+//					//adding the view to the linearlayout
+//					chartContainer.addView(mChartView);
+//				} catch (JSONException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//		
+//	
+		}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,6 +124,23 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void chartUpdate(long graphID) {
+	    if(!iPerfResultMain.isEmpty){
+	    	try {
+				mChartView = iPerfResultMain.DrawChart(MainActivity.this, (int)graphID);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	//this part is used to display graph on the xml
+	    	LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart);
+	    	//remove any views before u paint the chart
+	    	chartContainer.removeAllViews();
+	    	//adding the view to the linearlayout
+	    	chartContainer.addView(mChartView);
+	    }
 	}
 	static {
 		System.loadLibrary("ndklib");
