@@ -30,7 +30,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignRight="@+id/chart"
         android:text="@string/run_iperf_button" />
+
+    <Button
+        android:id="@+id/previousTestButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/chart"
+        android:text="@string/previousTestsButtonText" />
 
 </RelativeLayout>
