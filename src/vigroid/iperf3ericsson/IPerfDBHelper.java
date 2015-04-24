@@ -1,7 +1,11 @@
 package vigroid.iperf3ericsson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -106,13 +110,13 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
 		db.close();	
 	}
     
+    /*
+     * Queries DB for a specific test
+     * Returns TestResultDetails object
+     */
     public TestResultDetails getTestResultByID(long testID){
     	
     	SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.query(testTable, new String[] { colTimestamp,
-//        		colConnType, colCarrierName,colIMEI,colModelNum,colLongitude,colLatitude,colServerName,colPortNumber,
-//        		colAveSpeed,colPayloadSize,colPingTime,colCPUUtil,colIPAddress}, colTimestamp + "=?",
-//                new String[] { String.valueOf(testID) }, null, null, null, null);
     	
         Cursor cursor = db.query(testTable, null, colTimestamp + "=?",
                 new String[] { String.valueOf(testID) }, null, null, null, null);
@@ -134,7 +138,6 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
     	trd.setPingTime(Long.parseLong(cursor.getString(11)));
     	trd.setCpuUtilization(Double.parseDouble(cursor.getString(12)));
     	trd.setIpAddress(cursor.getString(13));}
-        // return contact
     	
     	db.close();
         return trd;
@@ -142,7 +145,9 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
     }
     
     
- // Getting contacts Count
+ /*
+  * Returns number of tests in DB
+  */
      public int getNumberOfTestsRun() {
     	 SQLiteDatabase db = this.getReadableDatabase();
          String countQuery = "SELECT  * FROM " + testTable;
@@ -154,15 +159,21 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
          return count;
      }
     
+     /*
+      * Method for PreviousTests.java. Returns a list of all tests run, and updates a list of timestamps and 
+      * average speeds for display in PreviousTests.java 
+      */
     public List<TestResultDetails> getAllTests() {
         List<TestResultDetails> testResultList = new ArrayList<TestResultDetails>();
+        PreviousTests.ArrayofTests.clear();
+        
         // Select All Query
         String selectQuery = "SELECT  * FROM " + testTable;
         
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         Log.w("IPERF","Count = " +Integer.toString(cursor.getCount()));
-        // looping through all rows and adding to list
+
         if (cursor.moveToFirst()) {
         	Log.w("IPERF","DB MOVED TO FIRST");
             do {
@@ -182,10 +193,8 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
             	trd.setCpuUtilization(Double.parseDouble(cursor.getString(12)));
             	trd.setIpAddress(cursor.getString(13));
             	
-
-                String name = cursor.getString(0);
+                String name = "Time: "+timestampToDate(cursor.getString(0))+" Speed: "+cursor.getString(9);
                 PreviousTests.ArrayofTests.add(name);
-                // Adding contact to list
                 testResultList.add(trd);
                 Log.w("IPERF","ADDED RECORD");
             } while (cursor.moveToNext());
@@ -195,5 +204,13 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
         return testResultList;
     }
 
-
+    /*
+     * Converts unix timestamp to human-readable date.
+     */
+    public String timestampToDate(String timestamp){
+    long dv = Long.valueOf(timestamp);
+    Date df = new java.util.Date(dv);
+    String date = new SimpleDateFormat("MM dd, yyyy hh:mm:ss").format(df);
+    return date;
+    }
 }

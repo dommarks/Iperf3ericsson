@@ -6,6 +6,8 @@
     <string name="action_settings">Settings</string>
     <string name="run_iperf_button">Run</string>
     <string name="grape_type_prompt">Choose a graph</string>
+    <string name="previousTestsButtonText">View Previous Tests</string>
+    <string name="testisrunning">Test is Running</string>
     
     <string-array name="graph_type_arrays">
         <item>Bar_Chart</item>

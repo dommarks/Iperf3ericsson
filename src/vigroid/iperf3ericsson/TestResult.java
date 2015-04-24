@@ -138,7 +138,36 @@ public class TestResult {
 		dr.setLatitude(30000);
 		dr.setLongtitude(20304);
 		
+		
+		/*******SAMPLE JSON OUTPUT********
+		04-23 20:40:34.635: W/IPERF(19052): JSON DATA: {"start":{"connected":[{"socket":45,"local_host":"192.168.1.71","local_port":42901,
+		"remote_host":"78.72.178.64","remote_port":5201}],"version":"iperf 3.0a11","system_info":"Linux localhost 3.4.0-3846539 #1 SMP PREEMPT Wed Mar 18 13:27:28 KST 2015 armv7l",
+		"timestamp":{"time":"Fri, 24 Apr 2015 01:40:26 GMT","timesecs":1429839626},"connecting_to":{"host":"coneye.myqnapcloud.com","port":5201},"cookie":"localhost.1429839625.637065.5d17fe6e","tcp_mss_default":1448,"test_start":{"protocol":"TCP","num_streams":1,"blksize":131072,"omit":0,"duration":7,"bytes":0,"blocks":0,"reverse":1}},"intervals":[{"streams":[{"socket":45,"start":0,"end":1.00027,"seconds":1.00027,"bytes":386616,"bits_per_second":3092090,"omitted":false}],
+		"sum":{"start":0,"end":1.00027,"seconds":1.00027,"bytes":386616,"bits_per_second":3092090,"omitted":false}},
+		{"streams":[{"socket":45,"start":1.00027,"end":2.00013,"seconds":0.99986,"bytes":1542872,"bits_per_second":12344700,
+		"omitted":false}],
+		"sum":{"start":1.00027,"end":2.00013,"seconds":0.99986,"bytes":1542872,"bits_per_second":12344700,"omitted":false}},
+		{"streams":[{"socket":45,"start":2.00013,"end":3.00011,"seconds":0.999983,"bytes":2018512,"bits_per_second":16148400,"omitted":false}],
+		"sum":{"start":2.00013,"end":3.00011,"seconds":0.999983,"bytes":2018512,"bits_per_second":16148400,"omitted":false}},
+		{"streams":[{"socket":45,"start":3.00011,"end":4.00027,"seconds":1.00015,"bytes":3013288,"bits_per_second":24102600,"omitted":false}],
+		"sum":{"start":3.00011,"end":4.00027,"seconds":1.00015,"bytes":3013288,"bits_per_second":24102600,"omitted":false}},
+		{"streams":[{"socket":45,"start":4.00027,"end":5.0001,"seconds":0.999833,"bytes":3249368,"bits_per_second":25999300,"omitted":false}],
+		"sum":{"start":4.00027,"end":5.0001,"seconds":0.999833,"bytes":3249368,"bits_per_second":25999300,"omitted":false}},
+		{"streams":[{"socket":45,"start":5.0001,"end":6.00012,"seconds":1.00002,"bytes":3149400,"bits_per_second":25194800,"omitted":false}],
+		"sum":{"start":5.0001,"end":6.00012,"seconds":1.00002,"bytes":3149400,"bits_per_second":25194800,"omitted":false}},
+		{"streams":[{"socket":45,"start":6.00012,"end":7.00016,"seconds":1.00004,"bytes":3492576,"bits_per_second":27939500,"omitted":false}],
+		"sum":{"start":6.00012,"end":7.00016,"seconds":1.00004,"bytes":3492576,"bits_per_second":27939500,"omitted":false}}],"end":
+		{"streams":[{"sender":{"socket":45,"start":0,"end":7.00016,"seconds":7.00016,"bytes":17657720,"bits_per_second":20179800,"retransmits":17,"max_snd_cwnd":0,"max_rtt":0,"min_rtt":0,"mean_rtt":0},
+		"receiver":{"socket":45,"start":0,"end":7.00016,"seconds":7.00016,"bytes":17507992,"bits_per_second":20008700}}],
+		"sum_sent":{"start":0,"end":7.00016,"seconds":7.00016,"bytes":17657720,"bits_per_second":20179800,"retransmits":17},
+		"sum_received":{"start":0,"end":7.00016,"seconds":7.00016,"bytes":17507992,"bits_per_second":20008700},
+		"cpu_utilization_percent":{"host_total":3.76416,"host_user":0.626119,"host_system":3.25582,"remote_total":0.0623147,
+		"remote_user":0.00553909,"remote_system":0.0567756}}}
+		Log.w("IPERF","JSON DATA: "+JSONResult.toString());
+		*/
+		
 		///Adding data from iperf test
+		try {
 //			dr.setServerName(jo.getString(ServerName));
 //			dr.setDataPayloadSize(jo.getInt(name));
 //			dr.setPingTime(jo.optLong(pingTime));
@@ -146,9 +175,18 @@ public class TestResult {
 			dr.setDataPayloadSize(25);
 			dr.setPingTime(30202020);
 			dr.setCpuUtilization(30040302);
-			dr.setIpAddress("THIS IS AN IP ADDRESS");
+			
+			dr.setIpAddress(JSONResult.getString("remote_host"));
+			
 			dr.setPortNumber("3040");
-			dr.setAverageSpeed(4000);
+			//String nameValue = JSONResult.getJSONObject("receiver").getString("bits_per_second");
+			//String nameValue = speedObject.getString("bits_per_second");
+			Log.w("IPERF","SPEED ="+JSONResult.getJSONObject("receiver").getString("bits_per_second"));
+			dr.setAverageSpeed(Double.parseDouble(JSONResult.getJSONObject("receiver").getString("bits_per_second")));
+			}catch (JSONException e) {
+				// TODO Auto-generated catch block
+				Log.w("IPERF","JSON ERRORED OUT");
+			}
 
 		dr.setContext(context);
 		dr.addToDB();

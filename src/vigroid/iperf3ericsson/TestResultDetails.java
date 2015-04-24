@@ -80,7 +80,8 @@ public class TestResultDetails {
 				200000, 300000, "serverName",
 				"portnumber", 400000, 500000000, 7000000, 8000000,
 				"ipAddress");
-		db.insertRecords(testTestResult);
+		//db.insertRecords(testTestResult);
+		db.insertRecords(this);
 		db.close();
 	}
 	

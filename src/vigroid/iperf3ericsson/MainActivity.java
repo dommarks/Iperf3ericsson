@@ -42,17 +42,14 @@ private View  mChartView;
 					MainActivity.this.startActivity(myIntent);
 			}});
 		
-		Button draw_Graph_button = (Button) findViewById(R.id.drawGraphButton);
+		final Button draw_Graph_button = (Button) findViewById(R.id.drawGraphButton);
 		draw_Graph_button.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), runIperf("iperf.scottlinux.com",5201),
+				draw_Graph_button.setText(R.string.testisrunning);
+				Toast.makeText(getApplicationContext(), runIperf("coneye.myqnapcloud.com",5201),
 						   Toast.LENGTH_LONG).show(); 
-				////TESTING DB
-//					TestResultDetails tr = new TestResultDetails(MainActivity.this);
-//					tr.addToDB();
-					
 					
 					//initialize DrawableResult
 	        	    iPerfResultMain = new DrawableResult("KB/s", "sdcard/iPerfResult.json",getBaseContext());
@@ -60,6 +57,7 @@ private View  mChartView;
 	        	    	chartUpdate(graphSpinner.getSelectedItemId());
 	        	    	TestResult tr = new TestResult("KB/s", "sdcard/iPerfResult.json",getBaseContext());
 	        	    	tr.createDetailResult();}
+	        	    draw_Graph_button.setText(R.string.run_iperf_button);
 			}
 		});	
 		
