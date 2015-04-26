@@ -12,16 +12,14 @@ public class TestResult {
 	//TODO could change to private, depends
 	protected JSONObject JSONResult;
 	private File JSONFile;
-	//TODO units switch
-	protected String unit;
 	public Boolean isEmpty;
+	private TestSubject teSubject;
 	
 	
-	
-	public TestResult(String defaultunit, String fileLocation) {
+	public TestResult(TestSubject teSubject) {
 		super();
-		this.unit = defaultunit;
-		this.JSONFile= new File(fileLocation);
+		this.teSubject=teSubject;
+		this.JSONFile= (this.teSubject.isResultEmpty)?null:new File("sdcard/iPerfResult.json");
 		this.isEmpty=true;
 		if(fetchJSONData())
 			this.isEmpty=false;
@@ -31,7 +29,6 @@ public class TestResult {
 	public Boolean fetchJSONData(){
 		if(this.JSONFile==null)
 			return false;
-		// Read JSON file from SDcard and Display it
 		try	{
 			//TODO consider take a variable instead of a fixed path
             FileInputStream stream = new FileInputStream(JSONFile);
@@ -46,9 +43,13 @@ public class TestResult {
             finally {
             	stream.close();
             }
-            
-            this.JSONResult = new JSONObject(jsonStr);
-
+            if (jsonStr.length()>1) {
+            	this.JSONResult = new JSONObject(jsonStr);
+            	return true;
+			}
+           
+			else
+				return false;
           
 		}
 		catch (Exception e) {
@@ -56,10 +57,6 @@ public class TestResult {
 		}
 		return true;
 		
-	}
-
-	public JSONObject getJSONResult() {
-		return JSONResult;
 	}
 	
 	
