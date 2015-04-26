@@ -2,7 +2,6 @@ package vigroid.iperf3ericsson;
 
 import org.json.JSONException;
 
-import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,7 +33,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		graphSpinner.setSelection(Integer.parseInt(pref.getString("chartDefaultType", "0")));
+		graphSpinner.setSelection(Integer.parseInt(pref.getString("chartDefault", "0")));
 		if (iPerfResultMain != null)
 			chartUpdate(graphSpinner.getSelectedItemId());
 	}
@@ -43,7 +42,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		// android.os.Debug.waitForDebugger();
 
 		setContentView(R.layout.activity_main);
 
@@ -52,7 +50,7 @@ public class MainActivity extends Activity {
 		pref= PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 		
-		graphSpinner.setSelection(Integer.parseInt(pref.getString("chartDefaultType", "0")));
+		graphSpinner.setSelection(Integer.parseInt(pref.getString("chartDefault", "0")));
 
 		Button draw_Graph_button = (Button) findViewById(R.id.drawGraphButton);
 

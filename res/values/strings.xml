@@ -94,7 +94,7 @@
     <string name="setting_number5_key">isGetLocation</string>
     <string name="setting_number6_key">unit</string>
     <string name="setting_number7_key">chartFontSize</string>
-    <string name="setting_number8_key">chartDefaultType</string>
+    <string name="setting_number8_key">chartDefault</string>
     <string name="setting_number9_key">summaryFontSize</string>
 
 </resources>

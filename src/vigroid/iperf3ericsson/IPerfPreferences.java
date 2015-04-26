@@ -8,7 +8,6 @@ public class IPerfPreferences extends Activity{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 		getFragmentManager().beginTransaction().replace(android.R.id.content, 
@@ -20,7 +19,6 @@ public class IPerfPreferences extends Activity{
 
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			// TODO Auto-generated method stub
 			super.onCreate(savedInstanceState);
 			
 			//load the preference from XML
