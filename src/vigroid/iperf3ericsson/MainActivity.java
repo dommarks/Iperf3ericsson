@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
+Button draw_Graph_button; 	
 private View  mChartView;
 	
 	private Spinner graphSpinner;
@@ -42,7 +43,7 @@ private View  mChartView;
 					MainActivity.this.startActivity(myIntent);
 			}});
 		
-		final Button draw_Graph_button = (Button) findViewById(R.id.drawGraphButton);
+		draw_Graph_button = (Button) findViewById(R.id.drawGraphButton);
 		draw_Graph_button.setOnClickListener(new View.OnClickListener() {
 
 			@Override

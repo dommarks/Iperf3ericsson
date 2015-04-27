@@ -17,15 +17,15 @@ public class TestResultDetails {
 	private String carrierName;
 	private String IMEINumber;
 	private String modelNumber;
-	private long timestamp; // or long type
-	private double longtitude;
-	private double latitude; // or Location type
+	private String timestamp; // or long type
+	private String longtitude;
+	private String latitude; // or Location type
 	private String ServerName;
 	private String portNumber;
-	private double averageSpeed;
-	private double dataPayloadSize;
-	private long pingTime;
-	private double CpuUtilization;
+	private String averageSpeed;
+	private String dataPayloadSize;
+	private String pingTime;
+	private String CpuUtilization;
 	private String IpAddress;
 
 	
@@ -35,10 +35,10 @@ public class TestResultDetails {
 	 */
 
 	public TestResultDetails(Context context, String connectionType, String carrierName,
-			String iMEINumber, String modelNumber, long timestamp,
-			double longtitude, double latitude, String serverName,
-			String portNumber, double averageSpeed, double dataPayloadSize,
-			long pingTime, double cpuUtilization, String ipAddress) {
+			String iMEINumber, String modelNumber, String timestamp,
+			String longtitude, String latitude, String serverName,
+			String portNumber, String averageSpeed, String dataPayloadSize,
+			String pingTime, String cpuUtilization, String ipAddress) {
 		super();
 		this.context = context;
 		this.connectionType = connectionType;
@@ -76,9 +76,9 @@ public class TestResultDetails {
 		IPerfDBHelper db = new IPerfDBHelper(context);
 		//db.insertTestRecord(this);	
 		TestResultDetails testTestResult = new TestResultDetails(context, "connectionType", "carrierName",
-				"iMEINumber", "modelNumber", System.currentTimeMillis(),
-				200000, 300000, "serverName",
-				"portnumber", 400000, 500000000, 7000000, 8000000,
+				"iMEINumber", "modelNumber", "1010101010101010101",
+				"200000", "300000", "serverName",
+				"portnumber", "400000", "500000000", "7000000", "8000000",
 				"ipAddress");
 		//db.insertRecords(testTestResult);
 		db.insertRecords(this);
@@ -145,27 +145,27 @@ public class TestResultDetails {
 		this.modelNumber = modelNumber;
 	}
 
-	public long getTimestamp() {
+	public String getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
 
-	public double getLongtitude() {
+	public String getLongtitude() {
 		return longtitude;
 	}
 
-	public void setLongtitude(double longtitude) {
+	public void setLongtitude(String longtitude) {
 		this.longtitude = longtitude;
 	}
 
-	public double getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
 
@@ -185,35 +185,35 @@ public class TestResultDetails {
 		this.portNumber = portNumber;
 	}
 
-	public double getAverageSpeed() {
+	public String getAverageSpeed() {
 		return averageSpeed;
 	}
 
-	public void setAverageSpeed(double averageSpeed) {
+	public void setAverageSpeed(String averageSpeed) {
 		this.averageSpeed = averageSpeed;
 	}
 
-	public double getDataPayloadSize() {
+	public String getDataPayloadSize() {
 		return dataPayloadSize;
 	}
 
-	public void setDataPayloadSize(double dataPayloadSize) {
+	public void setDataPayloadSize(String dataPayloadSize) {
 		this.dataPayloadSize = dataPayloadSize;
 	}
 
-	public long getPingTime() {
+	public String getPingTime() {
 		return pingTime;
 	}
 
-	public void setPingTime(long pingTime) {
+	public void setPingTime(String pingTime) {
 		this.pingTime = pingTime;
 	}
 
-	public double getCpuUtilization() {
+	public String getCpuUtilization() {
 		return CpuUtilization;
 	}
 
-	public void setCpuUtilization(double cpuUtilization) {
+	public void setCpuUtilization(String cpuUtilization) {
 		CpuUtilization = cpuUtilization;
 	}
 
@@ -229,9 +229,9 @@ public class TestResultDetails {
 	public String toString(){
 		return "Timestamp/ID="+timestamp + " ConnectionType= "+connectionType+" Carriername= " + carrierName
 				+" IMEINumber=" + IMEINumber+  " modelNumber=" + modelNumber+ " Longitude="+
-				Double.toString(longtitude)+ " Latitude="+ Double.toString(latitude)+ " Servername="+ ServerName+
-				" PortNumber=" +portNumber+ " Average speed="+ Double.toString(averageSpeed)+ " DataPayloadSize="+ dataPayloadSize+
-				" Ping="+ Long.toString(pingTime)+ " CPU Util="+ Double.toString(CpuUtilization)+ "IP Address="+ IpAddress;
+				longtitude+ " Latitude="+ latitude+ " Servername="+ ServerName+
+				" PortNumber=" +portNumber+ " Average speed="+ averageSpeed+ " DataPayloadSize="+ dataPayloadSize+
+				" Ping="+ pingTime+ " CPU Util="+ CpuUtilization+ "IP Address="+ IpAddress;
 		
 	}
 	

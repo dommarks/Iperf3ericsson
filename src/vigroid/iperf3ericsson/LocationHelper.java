@@ -33,7 +33,7 @@ public class LocationHelper{
 		TelephonyManager manager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
 		CarrierName = manager.getNetworkOperatorName();
 		IMEINumber = manager.getDeviceId();
-		DEVICE_NAME = getDeviceName(); 
+		DEVICE_NAME = generateDeviceName(); 
 	}
 	
 	public void getLocation(){
