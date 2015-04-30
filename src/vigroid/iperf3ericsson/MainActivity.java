@@ -69,6 +69,8 @@ public class MainActivity extends Activity {
 				iPerfResultMain = new DrawableResult(test);
 				if (iPerfResultMain != null && !iPerfResultMain.isEmpty)
 					chartUpdate(graphSpinner.getSelectedItemId());
+				TestResult tr = new TestResult("KB/s", "sdcard/iPerfResult.json",getBaseContext());
+    	    	tr.createDetailResult();
 			}
 		});
 
