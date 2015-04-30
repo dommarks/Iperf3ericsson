@@ -9,6 +9,17 @@
     <string name="run_iperf_button">Run</string>
     <string name="grape_type_prompt">Choose a graph</string>
     
+     
+  
+    <string name="previousTestsButtonText">View Previous Tests</string>
+    <string name="testisrunning">Test is Running</string>
+    <string name="exportDB">Export test results</string>
+    <string name="run_tests_first">Please run atleast one test first!</string>
+    
+    <string name="email_address"></string>
+    <string name="email_subject">IPERF Test Results</string>
+    <string name="email_body">Attached are IPERF test results</string>
+    
     <string-array name="graph_type_arrays">
         <item>Bar Chart</item>
         <item>Line Chart</item>

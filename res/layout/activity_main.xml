@@ -24,7 +24,13 @@
  	tools:ignore="Orientation" >
 
 	</LinearLayout>
-
+<Button
+        android:id="@+id/previousTestButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/chart"
+        android:text="@string/previousTestsButtonText" />
     <Button
         android:id="@+id/drawGraphButton"
         android:layout_width="wrap_content"

@@ -39,14 +39,18 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_credits=0x7f0b0004;
-        public static final int action_settings=0x7f0b0003;
+        public static final int action_credits=0x7f0b0007;
+        public static final int action_settings=0x7f0b0006;
         public static final int chart=0x7f0b0001;
         public static final int drawGraphButton=0x7f0b0002;
+        public static final int exportButton=0x7f0b0005;
         public static final int graph_select_spinner=0x7f0b0000;
+        public static final int gridView1=0x7f0b0004;
+        public static final int previousTestButton=0x7f0b0003;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
+        public static final int activity_test_history=0x7f030001;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
@@ -55,48 +59,55 @@ public final class R {
         public static final int action_credits=0x7f080004;
         public static final int action_settings=0x7f080003;
         public static final int app_name=0x7f080000;
+        public static final int email_address=0x7f08000b;
+        public static final int email_body=0x7f08000d;
+        public static final int email_subject=0x7f08000c;
+        public static final int exportDB=0x7f080009;
         public static final int grape_type_prompt=0x7f080006;
         public static final int hello_world=0x7f080002;
+        public static final int previousTestsButtonText=0x7f080007;
         public static final int run_iperf_button=0x7f080005;
-        public static final int setting_duration_description=0x7f08000d;
-        public static final int setting_group_title1=0x7f080007;
-        public static final int setting_group_title2=0x7f08000f;
-        public static final int setting_location_description=0x7f080011;
+        public static final int run_tests_first=0x7f08000a;
+        public static final int setting_duration_description=0x7f080014;
+        public static final int setting_group_title1=0x7f08000e;
+        public static final int setting_group_title2=0x7f080016;
+        public static final int setting_location_description=0x7f080018;
         public static final int setting_name=0x7f080001;
-        public static final int setting_number1=0x7f080008;
+        public static final int setting_number1=0x7f08000f;
         /**  default values for setting 
          */
-        public static final int setting_number1_default=0x7f080016;
+        public static final int setting_number1_default=0x7f08001d;
         /**  might need add tranlatable to false if we have locationizational plans  
          */
-        public static final int setting_number1_key=0x7f08001e;
-        public static final int setting_number2=0x7f08000a;
-        public static final int setting_number2_default=0x7f080017;
-        public static final int setting_number2_key=0x7f08001f;
-        public static final int setting_number3=0x7f08000c;
-        public static final int setting_number3_default=0x7f080018;
-        public static final int setting_number3_key=0x7f080020;
-        public static final int setting_number4=0x7f08000e;
+        public static final int setting_number1_key=0x7f080025;
+        public static final int setting_number2=0x7f080011;
+        public static final int setting_number2_default=0x7f08001e;
+        public static final int setting_number2_key=0x7f080026;
+        public static final int setting_number3=0x7f080013;
+        public static final int setting_number3_default=0x7f08001f;
+        public static final int setting_number3_key=0x7f080027;
+        public static final int setting_number4=0x7f080015;
         /**  0 is upload, 1 is download, 2 is both(may not use this option) 
          */
-        public static final int setting_number4_default=0x7f080019;
-        public static final int setting_number4_key=0x7f080021;
-        public static final int setting_number5=0x7f080010;
-        public static final int setting_number5_key=0x7f080022;
-        public static final int setting_number6=0x7f080012;
-        public static final int setting_number6_default=0x7f08001a;
-        public static final int setting_number6_key=0x7f080023;
-        public static final int setting_number7=0x7f080013;
-        public static final int setting_number7_default=0x7f08001b;
-        public static final int setting_number7_key=0x7f080024;
-        public static final int setting_number8=0x7f080014;
-        public static final int setting_number8_default=0x7f08001c;
-        public static final int setting_number8_key=0x7f080025;
-        public static final int setting_number9=0x7f080015;
-        public static final int setting_number9_default=0x7f08001d;
-        public static final int setting_number9_key=0x7f080026;
-        public static final int setting_port_description=0x7f08000b;
-        public static final int setting_server_description=0x7f080009;
+        public static final int setting_number4_default=0x7f080020;
+        public static final int setting_number4_key=0x7f080028;
+        public static final int setting_number5=0x7f080017;
+        public static final int setting_number5_key=0x7f080029;
+        public static final int setting_number6=0x7f080019;
+        public static final int setting_number6_default=0x7f080021;
+        public static final int setting_number6_key=0x7f08002a;
+        public static final int setting_number7=0x7f08001a;
+        public static final int setting_number7_default=0x7f080022;
+        public static final int setting_number7_key=0x7f08002b;
+        public static final int setting_number8=0x7f08001b;
+        public static final int setting_number8_default=0x7f080023;
+        public static final int setting_number8_key=0x7f08002c;
+        public static final int setting_number9=0x7f08001c;
+        public static final int setting_number9_default=0x7f080024;
+        public static final int setting_number9_key=0x7f08002d;
+        public static final int setting_port_description=0x7f080012;
+        public static final int setting_server_description=0x7f080010;
+        public static final int testisrunning=0x7f080008;
     }
     public static final class style {
         /** 

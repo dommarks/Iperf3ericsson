@@ -87,6 +87,16 @@ public class MainActivity extends Activity {
 			}
 		});
 
+		
+		Button previous_tests_button = (Button) findViewById(R.id.previousTestButton);
+		previous_tests_button.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+					Intent myIntent = new Intent(MainActivity.this, PreviousTests.class);
+					//myIntent.putExtra("key", value); //Optional parameters
+					MainActivity.this.startActivity(myIntent);
+			}});
 	}
 
 	@Override
@@ -116,6 +126,7 @@ public class MainActivity extends Activity {
 		if (iPerfResultMain != null)
 			chartUpdate(graphSpinner.getSelectedItemId());
 	}
+
 
 	public void chartUpdate(long graphID) {
 		if (!iPerfResultMain.isEmpty) {
