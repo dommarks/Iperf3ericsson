@@ -1,0 +1,3 @@
+set solib-search-path ./obj/local/x86_64
+source /home/spam/AndroidNDK/prebuilt/common/gdb/common.setup
+directory /home/spam/AndroidNDK/platforms/android-21/arch-x86_64/usr/include jni /home/spam/AndroidNDK/sources/cxx-stl/system
