@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -16,18 +17,50 @@ import android.text.TextUtils;
 public class LocationHelper{
 	
 	//Initialized on class start
-	private static LocationManager lm; 
-	private static Location location;
-	private static double longitude= 0;
-	private static double latitude = 0;
-	private static long locationTimestamp = 0;
+	private  LocationManager lm; 
+	private Location location;
+	private  Location locationNetwork;
+	private  double longitude= 0;
+	private  double latitude = 0;
+	private  long locationTimestamp = 0;
 	public static String IMEINumber;
 	public static String CarrierName;
 	public static String DEVICE_NAME;
+
 	
 	public LocationHelper(Context context){
-		lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE); 
-		location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//		lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE); 
+//		location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//		locationNetwork = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		
+		
+		LocationManager mlocManager=null;
+        LocationListener mlocListener;
+        mlocManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        mlocListener = new IperfLocationListener();
+       mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+
+       if (mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+           if(IperfLocationListener.latitude>0)
+           {
+        	   if(location!=null){
+                latitude= IperfLocationListener.latitude;
+                longitude = IperfLocationListener.longitude;
+        	   }
+            }
+            else
+            {
+            	latitude = -1;
+            	longitude = -1;
+//                 alert.setTitle("Wait");
+//                 alert.setMessage("GPS in progress, please wait.");
+//                 alert.setPositiveButton("OK", null);
+//                 alert.show();
+             }
+         } else {
+            // et_field_name.setText("GPS is not turned on...");
+         }
+
 		
 		//Setting carrier name
 		TelephonyManager manager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -37,20 +70,21 @@ public class LocationHelper{
 	}
 	
 	public void getLocation(){
+		
 	longitude = location.getLongitude();
 	latitude = location.getLatitude();
 	//Timestamp is to determine if the location is stale or not
 	locationTimestamp = System.currentTimeMillis();
 	}
 	
-	public double getLatitude(){
-		return latitude;
+	public String getLatitude(){
+		return Double.toString(latitude);
 	}
-	public double getLongitude(){
-		return longitude;
+	public String getLongitude(){
+		return Double.toString(longitude);
 	}
-	public double getLocationTimestamp(){
-		return locationTimestamp;
+	public String getLocationTimestamp(){
+		return Double.toString(locationTimestamp);
 	}
 	
 	public String getIMEI(){

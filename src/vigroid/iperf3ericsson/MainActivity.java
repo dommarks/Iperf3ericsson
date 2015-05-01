@@ -43,6 +43,8 @@ public class MainActivity extends Activity {
 
 		super.onCreate(savedInstanceState);
 
+		LocationHelper lh = new LocationHelper(getBaseContext());
+		//lh.getLocation();
 		setContentView(R.layout.activity_main);
 
 		graphSpinner = (Spinner) findViewById(R.id.graph_select_spinner);

@@ -34,6 +34,7 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
     static final String testTable="SpeedTestTable";
     
     //Iperf test table column names
+    static final String colTestID = "TestID";
     static final String colTimestamp = "Timestamp";
     static final String colConnType="ConnectionType";
     static final String colCarrierName="CarrierName";
@@ -58,7 +59,8 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
     	   // Database creation sql statement
         String CREATE_STATEMENT = "CREATE TABLE "+testTable+"("+
-        		colTimestamp+ " TEXT PRIMARY KEY, "+
+        		colTestID+ " TEXT PRIMARY KEY,"+
+        		colTimestamp+ " TEXT, "+
         		colConnType+ " TEXT,"+
         		colCarrierName+ " TEXT,"+
         		colIMEI+ " TEXT,"+
@@ -93,6 +95,7 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues cv = new ContentValues(); 
 		
+		cv.put(colTestID, dr.getTestID());
 		cv.put(colTimestamp, dr.getTimestamp());
 		cv.put(colConnType, dr.getConnectionType());
 		cv.put(colCarrierName, dr.getCarrierName());
@@ -126,20 +129,21 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
         
         if (cursor != null){
         cursor.moveToFirst();
-        trd.setTimestamp(cursor.getString(0));
-    	trd.setConnectionType(cursor.getString(1));
-    	trd.setCarrierName(cursor.getString(2));
-    	trd.setIMEINumber(cursor.getString(3));
-    	trd.setModelNumber(cursor.getString(4));
-    	trd.setLongtitude(cursor.getString(5));
+        trd.setTestID(cursor.getString(0));
+        trd.setTimestamp(cursor.getString(1));
+    	trd.setConnectionType(cursor.getString(2));
+    	trd.setCarrierName(cursor.getString(3));
+    	trd.setIMEINumber(cursor.getString(4));
+    	trd.setModelNumber(cursor.getString(5));
+    	trd.setLongtitude(cursor.getString(7));
     	trd.setLatitude(cursor.getString(6));
-    	trd.setServerName(cursor.getString(7));
-    	trd.setPortNumber(cursor.getString(8));
-    	trd.setAverageSpeed(cursor.getString(9));
-    	trd.setDataPayloadSize(cursor.getString(10));
-    	trd.setPingTime(cursor.getString(11));
-    	trd.setCpuUtilization(cursor.getString(12));
-    	trd.setIpAddress(cursor.getString(13));}
+    	trd.setServerName(cursor.getString(8));
+    	trd.setPortNumber(cursor.getString(9));
+    	trd.setAverageSpeed(cursor.getString(10));
+    	trd.setDataPayloadSize(cursor.getString(11));
+    	trd.setPingTime(cursor.getString(12));
+    	trd.setCpuUtilization(cursor.getString(13));
+    	trd.setIpAddress(cursor.getString(14));}
     	
     	db.close();
         return trd;
@@ -174,35 +178,32 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
         
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        Log.w("IPERF","Count = " +Integer.toString(cursor.getCount()));
-
+        
         if (cursor.moveToFirst()) {
-        	//Log.w("IPERF","DB MOVED TO FIRST");
             do {
             	TestResultDetails trd = new TestResultDetails();
-                trd.setTimestamp(cursor.getString(0));
-            	trd.setConnectionType(cursor.getString(1));
-            	trd.setCarrierName(cursor.getString(2));
-            	trd.setIMEINumber(cursor.getString(3));
-            	trd.setModelNumber(cursor.getString(4));
-            	trd.setLongtitude(cursor.getString(5));
+                trd.setTestID(cursor.getString(0));
+                trd.setTimestamp(cursor.getString(1));
+            	trd.setConnectionType(cursor.getString(2));
+            	trd.setCarrierName(cursor.getString(3));
+            	trd.setIMEINumber(cursor.getString(4));
+            	trd.setModelNumber(cursor.getString(5));
+            	trd.setLongtitude(cursor.getString(7));
             	trd.setLatitude(cursor.getString(6));
-            	trd.setServerName(cursor.getString(7));
-            	trd.setPortNumber(cursor.getString(8));
-            	trd.setAverageSpeed(cursor.getString(9));
-            	trd.setDataPayloadSize(cursor.getString(10));
-            	trd.setPingTime(cursor.getString(11));
-            	trd.setCpuUtilization(cursor.getString(12));
-            	trd.setIpAddress(cursor.getString(13));
+            	trd.setServerName(cursor.getString(8));
+            	trd.setPortNumber(cursor.getString(9));
+            	trd.setAverageSpeed(cursor.getString(10));
+            	trd.setDataPayloadSize(cursor.getString(11));
+            	trd.setPingTime(cursor.getString(12));
+            	trd.setCpuUtilization(cursor.getString(13));
+            	trd.setIpAddress(cursor.getString(14));
             	
-                String name = cursor.getString(0)+" Speed:"+cursor.getString(9);
+                String name = cursor.getString(1)+" Speed:"+cursor.getString(10);
                 PreviousTests.ArrayofTests.add(name);
                 testResultList.add(trd);
-               // Log.w("IPERF","ADDED RECORD");
             } while (cursor.moveToNext());
         }
         db.close();
-        // return contact list
         return testResultList;
     }
     
@@ -213,32 +214,22 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
     public String exportDatabase() {
     	String fileLocation = Environment.getExternalStorageDirectory().getAbsolutePath() + "/FILEEXPORT.csv";
         CSVWriter writer;
-        Log.w("IPERF","EXPORT RUN to:"+fileLocation);
+        
         try {
-        	//android.os.Environment.getExternalStorageDirectory(), "FILEEXPORT.csv")
 		writer = new CSVWriter(new FileWriter(fileLocation), '\t');
-		
-		
-        // feed in your array (or convert your data to an array)
-//        String[] entries = "first#second#third".split("#");
-//        writer.writeNext(entries);
-//   	 	writer.close();
-    	
     	
     	// Select All Query
     	String selectQuery = "SELECT  * FROM " + testTable;
         
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-//        Log.w("IPERF","Count = " +Integer.toString(cursor.getCount()));
-
-       // String[] temp = {};
         
-        int counter = 0;
+        boolean headerWritten = false;
         if (cursor.moveToFirst()) {
             do {
-            	if (counter ==0){
+            	if (headerWritten==false){
             	String tempheader = 
+            			"Test ID#"+
                         "Timestamp#"+
                     	"Connection Type#"+
                     	"Carrier Name#"+
@@ -256,30 +247,32 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
 
                     	String[] header = tempheader.split("#");
                     	writer.writeNext(header);
-                    	counter ++;
-                    	Log.w("IPERF","Writing header");}
-            	else{
+                    	headerWritten = true;
+                    	Log.w("IPERF","Writing header");
+                  }
+            	
             	String tempdata = 
                 cursor.getString(0)+"#"+
             	cursor.getString(1)+"#"+
             	cursor.getString(2)+"#"+
             	cursor.getString(3)+"#"+
             	cursor.getString(4)+"#"+
-            	cursor.getString(6)+"#"+
             	cursor.getString(5)+"#"+
-            	cursor.getString(7)+"#"+
+            	cursor.getString(6)+"#"+
             	cursor.getString(8)+"#"+
+            	cursor.getString(7)+"#"+
             	cursor.getString(9)+"#"+
             	cursor.getString(10)+"#"+
             	cursor.getString(11)+"#"+
             	cursor.getString(12)+"#"+
-            	cursor.getString(13);
+            	cursor.getString(13)+"#"+
+            	cursor.getString(14);
             	
             	
-            	String[] entry = tempdata.split("#");
-            	writer.writeNext(entry);
+            	String[] testEntry = tempdata.split("#");
+            	writer.writeNext(testEntry);
             	Log.w("IPERF",tempdata);
-            	}
+            	
             } while (cursor.moveToNext());
             
         }
@@ -293,14 +286,4 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
         
         return fileLocation;
     	}
-
-//    /*
-//     * Converts unix timestamp to human-readable date.
-//     */
-//    public String timestampToDate(String timestamp){
-//    long dv = Long.valueOf(timestamp);
-//    Date df = new java.util.Date(dv);
-//    String date = new SimpleDateFormat("MM dd, yyyy hh:mm:ss").format(df);
-//    return date;
-//    }
 }

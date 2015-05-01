@@ -27,6 +27,7 @@ public class TestResultDetails {
 	private String pingTime;
 	private String CpuUtilization;
 	private String IpAddress;
+	private String testID;
 
 	
 	/**
@@ -38,7 +39,7 @@ public class TestResultDetails {
 			String iMEINumber, String modelNumber, String timestamp,
 			String longtitude, String latitude, String serverName,
 			String portNumber, String averageSpeed, String dataPayloadSize,
-			String pingTime, String cpuUtilization, String ipAddress) {
+			String pingTime, String cpuUtilization, String ipAddress,String testID) {
 		super();
 		this.context = context;
 		this.connectionType = connectionType;
@@ -55,6 +56,7 @@ public class TestResultDetails {
 		this.pingTime = pingTime;
 		this.CpuUtilization = cpuUtilization;
 		this.IpAddress = ipAddress;
+		this.testID = testID;
 	}
 	
 	
@@ -72,15 +74,7 @@ public class TestResultDetails {
 	 * TODO add handling to prevent duplicate records from being entered
 	 */
 	public void addToDB(){
-		Log.w("IPERF","addToDB()");
-		IPerfDBHelper db = new IPerfDBHelper(context);
-		//db.insertTestRecord(this);	
-		TestResultDetails testTestResult = new TestResultDetails(context, "connectionType", "carrierName",
-				"iMEINumber", "modelNumber", "1010101010101010101",
-				"200000", "300000", "serverName",
-				"portnumber", "400000", "500000000", "7000000", "8000000",
-				"ipAddress");
-		//db.insertRecords(testTestResult);
+		IPerfDBHelper db = new IPerfDBHelper(context);	
 		db.insertRecords(this);
 		db.close();
 	}
@@ -101,10 +95,8 @@ public class TestResultDetails {
 		
 	}
 	
-	//TODO (read)read the element with the specific timestamp from locale database, choose the latest one  if no Internet connection available
 	public TestResultDetails DBFetchEntrie(Timestamp timestamp){
 		TestResultDetails currentResult = null;
-		
 		return currentResult;
 	}
 	
@@ -224,16 +216,26 @@ public class TestResultDetails {
 	public void setIpAddress(String ipAddress) {
 		IpAddress = ipAddress;
 	}
+	
+	public String getTestID() {
+		return testID;
+	}
+	public void setTestID(String testId){
+		testID = testId;
+	}
 
 	@Override
 	public String toString(){
-		return "Timestamp/ID="+timestamp + " ConnectionType= "+connectionType+" Carriername= " + carrierName
+		return "TestID="+testID+" Timestamp="+timestamp + " ConnectionType= "+connectionType+" Carriername= " + carrierName
 				+" IMEINumber=" + IMEINumber+  " modelNumber=" + modelNumber+ " Longitude="+
 				longtitude+ " Latitude="+ latitude+ " Servername="+ ServerName+
 				" PortNumber=" +portNumber+ " Average speed="+ averageSpeed+ " DataPayloadSize="+ dataPayloadSize+
 				" Ping="+ pingTime+ " CPU Util="+ CpuUtilization+ "IP Address="+ IpAddress;
 		
 	}
+
+
+
 	
 	
 	
