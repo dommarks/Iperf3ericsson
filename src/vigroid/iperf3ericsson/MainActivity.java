@@ -140,6 +140,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				
 					Intent myIntent = new Intent(MainActivity.this, PreviousTests.class);
 					//myIntent.putExtra("key", value); //Optional parameters
 					MainActivity.this.startActivity(myIntent);

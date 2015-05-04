@@ -111,18 +111,22 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
 		db.insert(testTable,null,cv);
 		db.close();	
 	}
+    public void deleteAllRecords(){
+    	SQLiteDatabase db = this.getReadableDatabase();
+        db.delete(testTable, null, null);
+        db.close();
+    }
     
     /*
      * Queries DB for a specific test
      * Returns TestResultDetails object
      */
     public TestResultDetails getTestResultByID(String testID){
-    	
+    	TestResultDetails trd = new TestResultDetails();
     	SQLiteDatabase db = this.getReadableDatabase();
     	
-        Cursor cursor = db.query(testTable, null, colTimestamp + "=?",
-                new String[] { String.valueOf(testID) }, null, null, null, null);
-        TestResultDetails trd = new TestResultDetails();
+        Cursor cursor = db.query(testTable, null, colTestID + "=?",
+                new String[] { testID }, null, null, null, null);
         
         if (cursor != null){
         cursor.moveToFirst();
@@ -167,7 +171,13 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
       */
     public List<TestResultDetails> getAllTests() {
         List<TestResultDetails> testResultList = new ArrayList<TestResultDetails>();
-        PreviousTests.ArrayofTests.clear();
+        
+        if (PreviousTests.ArrayofTests != null){
+        	PreviousTests.ArrayofTests.clear();
+        	}
+        if (PreviousTests.adapter!=null){
+        	PreviousTests.adapter.clear();
+        }
         
         // Select All Query
         String selectQuery = "SELECT  * FROM " + testTable;
@@ -192,9 +202,10 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
             	trd.setPingTime(cursor.getString(12));
             	trd.setCpuUtilization(cursor.getString(13));
             	trd.setIpAddress(cursor.getString(14));
-            	
-                String name = cursor.getString(1)+" Speed:"+cursor.getString(10);
-                PreviousTests.ArrayofTests.add(name);
+            
+                String name = cursor.getString(1)+" Speed: "+String.format("%.2f", Double.valueOf(cursor.getString(10)));
+                PreviousTests.adapter.add(name);
+                //PreviousTests.ArrayofTests.add(name);
                 testResultList.add(trd);
             } while (cursor.moveToNext());
         }
@@ -202,17 +213,24 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
         return testResultList;
     }
     
+    public void deleteRecord(String testID){
+    	SQLiteDatabase db = this.getReadableDatabase();
+    	db.delete(testTable, colTestID + "=" + testID, null);
+    	db.close();
+    }
+    
     /**
      * Exports the database into a CSV file, returns the path the file is saved to.
      * @return String - path the CSV file is saved to
      */
     public String exportDatabase() {
-    	String fileLocation = Environment.getExternalStorageDirectory().getAbsolutePath() + "/FILEEXPORT.csv";
+    	//File name and location
+    	String fileLocation = Environment.getExternalStorageDirectory().getAbsolutePath() + "/IPERF-"+LocationHelper.IMEINumber+".csv";
         CSVWriter writer;
         
         try {
         	writer = new CSVWriter(new FileWriter(fileLocation), '\t');
-
+        	
         	// Select All Query
         	String selectQuery = "SELECT  * FROM " + testTable;
 
@@ -264,7 +282,7 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
         					cursor.getString(12)+"#"+
         					cursor.getString(13)+"#"+
         					cursor.getString(14);
-
+        			
         			String[] testEntry = tempdata.split("#");
         			writer.writeNext(testEntry);
         		}
@@ -272,8 +290,6 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
         	db.close();
         	writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			Log.w("IPERF","EXPORT FAILED");
 			Log.w("IPERF",e.toString());
 		}
         return fileLocation;

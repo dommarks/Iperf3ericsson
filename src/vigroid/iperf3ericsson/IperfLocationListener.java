@@ -13,7 +13,6 @@ public class IperfLocationListener implements LocationListener {
     @Override
 	public void onLocationChanged(Location loc)
 	{
-    	Log.w("IPERF","LOCATION CHANGED");
 		loc.getLatitude();
 		loc.getLongitude();
 		latitude=loc.getLatitude();
@@ -21,7 +20,6 @@ public class IperfLocationListener implements LocationListener {
 		
 		LocationHelper.latitude=loc.getLatitude();
 		LocationHelper.longitude=loc.getLongitude();
-		Log.w("IPERF","LATITUDE: "+Double.toString(loc.getLatitude())+"Longi: "+Double.toString(loc.getLongitude()));
 	}
 
 	@Override

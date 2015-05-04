@@ -7,9 +7,12 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 /* Gets device location.
  * @TODO add handling for GPS turned off, network location, and delayed updates.
@@ -102,15 +105,16 @@ public class LocationHelper{
 		return DEVICE_NAME;
 	}
 	
-	public String getNetworkClassName(Context context){
-		//Getting network connection type
-		if (ConnectivityManager.isNetworkTypeValid(ConnectivityManager.TYPE_WIFI)){
-			return "WIFI";
-		}else if (ConnectivityManager.isNetworkTypeValid(ConnectivityManager.TYPE_MOBILE)){
-			return getNetworkClass(context);
-		}else {
-			return "UNKNOWN";
-		}	
+	public static String getNetworkClassName(Context context){
+		ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		Log.w("IPERF","NETWORK INFO = "+connManager.getActiveNetworkInfo().getSubtypeName());
+		
+		if (mWifi.isConnected()){
+			WifiManager WifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+			return connManager.getActiveNetworkInfo().getTypeName()+" - "+ WifiManager.getConnectionInfo().getLinkSpeed()+" - "+connManager.getActiveNetworkInfo().getExtraInfo();
+		}
+		return connManager.getActiveNetworkInfo().getTypeName()+" - "+connManager.getActiveNetworkInfo().getSubtypeName()+" - "+connManager.getActiveNetworkInfo().getExtraInfo();
 	}
 	
 	public static String generateDeviceName() {
@@ -144,34 +148,6 @@ public class LocationHelper{
 	        phrase += c;
 	    }
 	    return phrase;
-	}
-	
-	public String getNetworkClass(Context context) {
-	    TelephonyManager mTelephonyManager = (TelephonyManager)
-	            context.getSystemService(Context.TELEPHONY_SERVICE);
-	    int networkType = mTelephonyManager.getNetworkType();
-	    switch (networkType) {
-	        case TelephonyManager.NETWORK_TYPE_GPRS:
-	        case TelephonyManager.NETWORK_TYPE_EDGE:
-	        case TelephonyManager.NETWORK_TYPE_CDMA:
-	        case TelephonyManager.NETWORK_TYPE_1xRTT:
-	        case TelephonyManager.NETWORK_TYPE_IDEN:
-	            return "2G";
-	        case TelephonyManager.NETWORK_TYPE_UMTS:
-	        case TelephonyManager.NETWORK_TYPE_EVDO_0:
-	        case TelephonyManager.NETWORK_TYPE_EVDO_A:
-	        case TelephonyManager.NETWORK_TYPE_HSDPA:
-	        case TelephonyManager.NETWORK_TYPE_HSUPA:
-	        case TelephonyManager.NETWORK_TYPE_HSPA:
-	        case TelephonyManager.NETWORK_TYPE_EVDO_B:
-	        case TelephonyManager.NETWORK_TYPE_EHRPD:
-	        case TelephonyManager.NETWORK_TYPE_HSPAP:
-	            return "3G";
-	        case TelephonyManager.NETWORK_TYPE_LTE:
-	            return "4G";
-	        default:
-	            return "Unknown";
-	    }
 	}
 	
 }

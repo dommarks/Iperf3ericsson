@@ -13,8 +13,22 @@
     
     <string name="previousTestsButtonText">View Previous Tests</string>
     <string name="testisrunning">Test is Running</string>
-    <string name="exportDB">Export test results</string>
-    <string name="run_tests_first">Please run atleast one test first!</string>
+    <string name="export_email_button">Export via Email</string>
+    <string name="export_ftp_button">Export via FTP</string>
+    <string name="export_ftp_button_in_progress">Uploading...</string>
+    <string name="run_tests_first">Please run a test first!</string>
+    <string name="unable_to_attach">Error. Unable to attach file</string>
+	<string name="delete_all_records">Delete all records</string>
+    <string name="delete_all_ask">This will delete all previous test records. This can not be reversed. Are you sure you want to delete all?</string>
+    <string name="delete_all_yes">DELETE RECORDS</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_this_test">Delete this test</string>
+    <string name="go_back">Go Back</string>
+    
+    <string name="ftp_start">Starting FTP upload</string>
+    <string name="ftp_success">File uploaded successfully</string>
+    <string name="ftp_aborted">File upload aborted</string>
+    <string name="ftp_failed">FTP transfer failed</string>
     
     <string name="email_address"></string>
     <string name="email_subject">IPERF Test Results</string>

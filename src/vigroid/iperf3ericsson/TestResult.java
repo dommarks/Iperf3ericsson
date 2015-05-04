@@ -108,18 +108,18 @@ public class TestResult {
 		dr.setDataPayloadSize(payloadSize);
 		dr.setIpAddress(ipAddress);
 		
-		LocationHelper lh = new LocationHelper(context);
+		//LocationHelper lh = new LocationHelper(context);
 		
-		dr.setConnectionType(lh.getNetworkClassName(context));
+		dr.setConnectionType(LocationHelper.getNetworkClassName(context));
 		dr.setCarrierName(LocationHelper.CarrierName);
 		dr.setIMEINumber(LocationHelper.IMEINumber);
 		dr.setModelNumber(LocationHelper.DEVICE_NAME);
-		
-		dr.setTestID(Long.toString(System.currentTimeMillis())+"."+dr.getIMEINumber());
+
+		dr.setTestID(Long.toString(System.currentTimeMillis())+"-"+LocationHelper.IMEINumber);
 		
 		//Setting location
-		dr.setLatitude(lh.getLatitude());
-		dr.setLongtitude(lh.getLongitude());
+		dr.setLatitude(Double.toString(LocationHelper.latitude));
+		dr.setLongtitude(Double.toString(LocationHelper.longitude));
 		
 		//Add to database
 		dr.addToDB();

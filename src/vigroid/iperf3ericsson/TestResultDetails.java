@@ -233,6 +233,15 @@ public class TestResultDetails {
 				" Ping="+ pingTime+ " CPU Util="+ CpuUtilization+ "IP Address="+ IpAddress;
 		
 	}
+	
+	public String toStringFormatted(){
+		return "TestID= "+testID+"\nTimestamp = "+timestamp + "\nConnectionType = "+connectionType+"\nCarrier Name = " + carrierName
+				+"\nIMEI Number = " + IMEINumber+  "\nModel Number = " + modelNumber+ "\nLongitude = "+
+				longtitude+ "\nLatitude="+ latitude+ "\nServer Name="+ ServerName+
+				"\nPort Number =" +portNumber+ "\nAverage speed = "+ averageSpeed+ "\nDataPayloadSize = "+ dataPayloadSize+
+				"\nPing ="+ pingTime+ "\nCPU Utilization = "+ CpuUtilization+ "\nIP Address = "+ IpAddress;
+		
+	}
 
 
 
