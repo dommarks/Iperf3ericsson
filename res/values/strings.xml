@@ -8,9 +8,9 @@
 	<string name="action_credits">Credits</string>
     <string name="run_iperf_button">Run</string>
     <string name="grape_type_prompt">Choose a graph</string>
+    <string name="run_continuously">Run Constant Tests</string>
+    <string name="stop_tests">Stop Testing</string>
     
-     
-  
     <string name="previousTestsButtonText">View Previous Tests</string>
     <string name="testisrunning">Test is Running</string>
     <string name="exportDB">Export test results</string>
@@ -79,6 +79,8 @@
     <string name="setting_duration_description">Unit is second, default value is 5</string>
     <string name="setting_number4">Test Type</string>
     <string name="setting_group_title2">App Configurations</string>
+    <string name="setting_number10">Duration</string>
+    <string name="setting_multipleTests_description">Time in seconds to wait between tests when running continuous testing</string>
     <string name="setting_number5">Get Your Location</string>
     <string name="setting_location_description">You can turn it off if you have privacy concerns</string>
     <string name="setting_number6">Display Unit</string>
@@ -96,16 +98,19 @@
     <string name="setting_number7_default">M</string>
     <string name="setting_number8_default">0</string>
     <string name="setting_number9_default">M</string>
+    <string name="setting_number10_default">10</string>
     
     <!-- might need add tranlatable to false if we have locationizational plans  -->
     <string name="setting_number1_key">serverAddress</string>
     <string name="setting_number2_key">port</string>
     <string name="setting_number3_key">duration</string>
     <string name="setting_number4_key">testType</string>
+    <string name="setting_number10_key">timeBetweenTests</string>
     <string name="setting_number5_key">isGetLocation</string>
     <string name="setting_number6_key">unit</string>
     <string name="setting_number7_key">chartFontSize</string>
     <string name="setting_number8_key">chartDefault</string>
     <string name="setting_number9_key">summaryFontSize</string>
+    
 
 </resources>

@@ -25,6 +25,12 @@
             android:defaultValue="@string/setting_number4_default"
             android:entryValues="@array/test_type_values"
             android:entries="@array/test_type_array"/>
+       <ListPreference 
+            android:key="@string/setting_number10_key"
+            android:title="@string/setting_number4"
+            android:defaultValue="@string/setting_number10_default"
+            android:entryValues="@array/test_type_values"
+            android:entries="@array/test_type_array"/>
 
     </PreferenceCategory>
     

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,8 +28,13 @@ public class MainActivity extends Activity {
 
 	DrawableResult iPerfResultMain;
 	SharedPreferences pref;
-
 	TestSubject test;
+	private Runnable runnable;
+	private Handler handler;
+	private boolean runTests = false;
+	private LocationHelper lh;
+	
+	private Button runMultipleTestsButton;
 
 	@Override
 	protected void onRestart() {
@@ -42,9 +48,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-
-		LocationHelper lh = new LocationHelper(getBaseContext());
-		//lh.getLocation();
+		lh = new LocationHelper(getBaseContext());
+		
 		setContentView(R.layout.activity_main);
 
 		graphSpinner = (Spinner) findViewById(R.id.graph_select_spinner);
@@ -62,6 +67,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				
 				// initial test and run iPerf3
 				test = new TestSubject(getApplicationContext());
 				Toast.makeText(getApplicationContext(), test.runTest(),
@@ -73,9 +79,46 @@ public class MainActivity extends Activity {
 					chartUpdate(graphSpinner.getSelectedItemId());
 				TestResult tr = new TestResult("KB/s", "sdcard/iPerfResult.json",getBaseContext());
     	    	tr.createDetailResult();
+    	    	
 			}
 		});
 
+		runMultipleTestsButton = (Button) findViewById(R.id.runMultipleTests);
+		runMultipleTestsButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				runTests = !runTests;
+				
+				if (runTests){
+					lh.startLocationListening();
+					runMultipleTestsButton.setText(getResources().getString(R.string.stop_tests));
+					handler = new Handler();
+					runnable = new Runnable() {
+					    public void run() {
+					    	lh.startLocationListening();
+							test = new TestSubject(getApplicationContext());
+							Toast.makeText(getApplicationContext(), test.runTest(),
+									Toast.LENGTH_LONG).show();
+
+							// initialize DrawableResult
+							iPerfResultMain = new DrawableResult(test);
+							if (iPerfResultMain != null && !iPerfResultMain.isEmpty)
+								chartUpdate(graphSpinner.getSelectedItemId());
+							TestResult tr = new TestResult("KB/s", "sdcard/iPerfResult.json",getBaseContext());
+			    	    	tr.createDetailResult();
+					        handler.postDelayed(this, 1000);
+					    }
+					};
+					handler.postDelayed(runnable, 1);	
+				}else{
+					handler.removeCallbacks(runnable);
+					lh.stopLocationListening();
+					runMultipleTestsButton.setText(getResources().getString(R.string.run_continuously));
+				}
+			}
+		});
+		
 		graphSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override

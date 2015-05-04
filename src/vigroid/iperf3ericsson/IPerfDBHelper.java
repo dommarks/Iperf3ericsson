@@ -81,9 +81,6 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
     // Method is called during an upgrade of the database,
     @Override
     public void onUpgrade(SQLiteDatabase database,int oldVersion,int newVersion){
-        Log.w(IPerfDBHelper.class.getName(),
-                         "Upgrading database from version " + oldVersion + " to "
-                         + newVersion + ", which will destroy all old data");
         database.execSQL("DROP TABLE IF EXISTS "+ testTable);
         onCreate(database);
     }
@@ -119,7 +116,7 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
      * Queries DB for a specific test
      * Returns TestResultDetails object
      */
-    public TestResultDetails getTestResultByID(long testID){
+    public TestResultDetails getTestResultByID(String testID){
     	
     	SQLiteDatabase db = this.getReadableDatabase();
     	
@@ -150,7 +147,6 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
     	
     }
     
-    
  /*
   * Returns number of tests in DB
   */
@@ -175,7 +171,6 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
         
         // Select All Query
         String selectQuery = "SELECT  * FROM " + testTable;
-        
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         
@@ -216,74 +211,71 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
         CSVWriter writer;
         
         try {
-		writer = new CSVWriter(new FileWriter(fileLocation), '\t');
-    	
-    	// Select All Query
-    	String selectQuery = "SELECT  * FROM " + testTable;
-        
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        
-        boolean headerWritten = false;
-        if (cursor.moveToFirst()) {
-            do {
-            	if (headerWritten==false){
-            	String tempheader = 
-            			"Test ID#"+
-                        "Timestamp#"+
-                    	"Connection Type#"+
-                    	"Carrier Name#"+
-                    	"IMEI Number#"+
-                    	"Model#"+
-                    	"Latitude#"+
-                    	"Longitude#"+
-                    	"Server Name#"+
-                    	"Port#"+
-                    	"Average Speed#"+
-                    	"Payload Size#"+
-                    	"Ping Time#"+
-                    	"CPU Utilization#"+
-                    	"Device IP";
+        	writer = new CSVWriter(new FileWriter(fileLocation), '\t');
 
-                    	String[] header = tempheader.split("#");
-                    	writer.writeNext(header);
-                    	headerWritten = true;
-                    	Log.w("IPERF","Writing header");
-                  }
-            	
-            	String tempdata = 
-                cursor.getString(0)+"#"+
-            	cursor.getString(1)+"#"+
-            	cursor.getString(2)+"#"+
-            	cursor.getString(3)+"#"+
-            	cursor.getString(4)+"#"+
-            	cursor.getString(5)+"#"+
-            	cursor.getString(6)+"#"+
-            	cursor.getString(8)+"#"+
-            	cursor.getString(7)+"#"+
-            	cursor.getString(9)+"#"+
-            	cursor.getString(10)+"#"+
-            	cursor.getString(11)+"#"+
-            	cursor.getString(12)+"#"+
-            	cursor.getString(13)+"#"+
-            	cursor.getString(14);
-            	
-            	
-            	String[] testEntry = tempdata.split("#");
-            	writer.writeNext(testEntry);
-            	Log.w("IPERF",tempdata);
-            	
-            } while (cursor.moveToNext());
-            
-        }
-        db.close();
-        writer.close();
+        	// Select All Query
+        	String selectQuery = "SELECT  * FROM " + testTable;
+
+        	SQLiteDatabase db = this.getWritableDatabase();
+        	Cursor cursor = db.rawQuery(selectQuery, null);
+
+        	boolean headerWritten = false;
+        	if (cursor.moveToFirst()) {
+        		while (cursor.moveToNext()) {
+        			///Writing CSV file header
+        			if (headerWritten==false){
+        				String tempheader = 
+        								"Test ID#"+
+        								"Timestamp#"+
+        								"Connection Type#"+
+        								"Carrier Name#"+
+        								"IMEI Number#"+
+        								"Model#"+
+        								"Latitude#"+
+        								"Longitude#"+
+        								"Server Name#"+
+        								"Port#"+
+        								"Average Speed#"+
+        								"Payload Size#"+
+        								"Ping Time#"+
+        								"CPU Utilization#"+
+        								"Device IP";
+
+        				String[] header = tempheader.split("#");
+        				writer.writeNext(header);
+        				headerWritten = true;
+        			}
+        			////End of CSV file header
+        			
+        			//Getting record
+        			String tempdata = 
+        					cursor.getString(0)+"#"+
+        					cursor.getString(1)+"#"+
+        					cursor.getString(2)+"#"+
+        					cursor.getString(3)+"#"+
+        					cursor.getString(4)+"#"+
+        					cursor.getString(5)+"#"+
+        					cursor.getString(7)+"#"+
+        					cursor.getString(6)+"#"+
+        					cursor.getString(8)+"#"+
+        					cursor.getString(9)+"#"+
+        					cursor.getString(10)+"#"+
+        					cursor.getString(11)+"#"+
+        					cursor.getString(12)+"#"+
+        					cursor.getString(13)+"#"+
+        					cursor.getString(14);
+
+        			String[] testEntry = tempdata.split("#");
+        			writer.writeNext(testEntry);
+        		}
+        	}
+        	db.close();
+        	writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			Log.w("IPERF","EXPORT FAILED");
 			Log.w("IPERF",e.toString());
 		}
-        
         return fileLocation;
     	}
 }

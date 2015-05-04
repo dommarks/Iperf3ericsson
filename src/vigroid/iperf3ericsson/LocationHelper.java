@@ -19,43 +19,38 @@ public class LocationHelper{
 	//Initialized on class start
 	private  LocationManager lm; 
 	private Location location;
-	private  Location locationNetwork;
-	private  double longitude= 0;
-	private  double latitude = 0;
-	private  long locationTimestamp = 0;
+	private Location locationNetwork;
+	public static double longitude;
+	public static double latitude;
+	private static long locationTimestamp = 0;
 	public static String IMEINumber;
 	public static String CarrierName;
 	public static String DEVICE_NAME;
-
+	private IperfLocationListener mlocListener;
+	private LocationManager mlocManager;
+	private boolean isListening;
+	private Context context;
 	
 	public LocationHelper(Context context){
-//		lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE); 
-//		location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//		locationNetwork = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-		
-		
-		LocationManager mlocManager=null;
-        LocationListener mlocListener;
+		longitude = 0; latitude = 0;
+		this.context = context;
+		//LocationManager mlocManager=null;
+        //LocationListener mlocListener;
         mlocManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         mlocListener = new IperfLocationListener();
        mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+       isListening = true;
 
        if (mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
            if(IperfLocationListener.latitude>0)
            {
-        	   if(location!=null){
                 latitude= IperfLocationListener.latitude;
                 longitude = IperfLocationListener.longitude;
-        	   }
             }
             else
             {
             	latitude = -1;
             	longitude = -1;
-//                 alert.setTitle("Wait");
-//                 alert.setMessage("GPS in progress, please wait.");
-//                 alert.setPositiveButton("OK", null);
-//                 alert.show();
              }
          } else {
             // et_field_name.setText("GPS is not turned on...");
@@ -69,12 +64,21 @@ public class LocationHelper{
 		DEVICE_NAME = generateDeviceName(); 
 	}
 	
-	public void getLocation(){
-		
-	longitude = location.getLongitude();
-	latitude = location.getLatitude();
-	//Timestamp is to determine if the location is stale or not
-	locationTimestamp = System.currentTimeMillis();
+	public void startLocationListening(){
+		if (!isListening){
+			mlocManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+	        mlocListener = new IperfLocationListener();
+	       mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
+	       isListening = true;
+		}
+	}
+	
+	public void stopLocationListening(){
+		if(isListening){
+		mlocManager.removeUpdates(mlocListener);
+		mlocManager = null;
+		mlocListener = null;
+		isListening = false;}
 	}
 	
 	public String getLatitude(){

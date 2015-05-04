@@ -24,19 +24,29 @@
  	tools:ignore="Orientation" >
 
 	</LinearLayout>
+
 <Button
-        android:id="@+id/previousTestButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/chart"
-        android:text="@string/previousTestsButtonText" />
+    android:id="@+id/previousTestButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:layout_below="@+id/chart"
+    android:text="@string/previousTestsButtonText" />
+
     <Button
         android:id="@+id/drawGraphButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignRight="@+id/chart"
         android:text="@string/run_iperf_button" />
+
+    <Button
+        android:id="@+id/runMultipleTests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chart"
+        android:layout_toLeftOf="@+id/drawGraphButton"
+        android:text="@string/run_continuously" />
 
 </RelativeLayout>
