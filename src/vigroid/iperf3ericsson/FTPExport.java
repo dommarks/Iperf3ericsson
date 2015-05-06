@@ -17,6 +17,10 @@ public class FTPExport extends AsyncTask<String, Void, FTPExport> {
 	private Context context;
 	private Activity activity;
 	
+	private static final String FTP_SERVER_ADDRESS = pref;
+	private static final String FTP_USERNAME = pref;
+	private static final String FTP_PASSWORD = pref;
+	
 	FTPExport(String fileName,Context context, Activity activity){
 		this.fileLocation = fileName;
 		this.context = context;
@@ -28,86 +32,46 @@ public class FTPExport extends AsyncTask<String, Void, FTPExport> {
 	 */
 	@Override
 	protected FTPExport doInBackground(String... fileName) {
-		Log.w("IPERF","EXPORT STARTED");
 		 FTPClient client = new FTPClient();
 		 File uploadFile = new File(fileLocation);
 		try {
-			client.connect("ftp.barracudasalad.com",21);
-			client.login("iperftest@barracudasalad.com", "P@$$W0rd");
+			client.connect(FTP_SERVER_ADDRESS,21);
+			client.login(FTP_USERNAME, FTP_PASSWORD);
 			client.setType(FTPClient.TYPE_BINARY);
 			client.setPassive(true); 
 			client.noop();
-			client.upload(uploadFile, new MyTransferListener());
-			Log.w("IPERF","EXPORT TRY");
+			client.upload(uploadFile, new FTPTransferListener());
 		} catch (Exception e) {
 			toastMessage(context.getString(R.string.ftp_failed)+" "+ e.toString());
-			Log.w("IPERF",e.toString());
 			try {
 				client.disconnect(true);	
 			} catch (Exception e2) {
-				Log.w("IPERF",e2.toString());
+				e2.printStackTrace();
 			}
 		}
-		
-  
 		return null;
 	}
 	
-//	/*
-//	 * FTP Upload. Utililzes ftp4j - FOSS license/GNU 2.0 - http://sourceforge.net/projects/ftp4j/
-//	 */
-//	public void exportViaFTP(){
-//		Log.w("IPERF","EXPORT STARTED");
-//		 FTPClient client = new FTPClient();
-//		 File uploadFile = new File(fileLocation);
-//		try {
-//			client.connect("lab00.cs.ndsu.nodak.edu",22);
-//			client.login("u552", "8D@ys/wk");
-//			client.setType(FTPClient.TYPE_BINARY);
-//			client.setPassive(true); 
-//			client.noop();
-//			client.changeDirectory("/home/u552/IPERFuploads/");
-//			client.upload(uploadFile, new MyTransferListener());
-//			Log.w("IPERF","EXPORT TRY");
-//		} catch (Exception e) {
-//			toastMessage(context.getString(R.string.ftp_failed)+" "+ e.toString());
-//			Log.w("IPERF",e.toString());
-//			try {
-//				client.disconnect(true);	
-//			} catch (Exception e2) {
-//				Log.w("IPERF","e2"+e2.toString());
-//			}
-//		}
-//		
-//   }
-	
-	public class MyTransferListener implements FTPDataTransferListener {
+	public class FTPTransferListener implements FTPDataTransferListener {
 
     	public void started() {
-    		Log.w("IPERF","STARTED");
     		toastMessage(context.getString(R.string.ftp_start));
-    		
     	}
     	
     	public void transferred(int length) {
-    		Log.w("IPERF","Transfered");
     	}
 
     	public void completed() {
-    		Log.w("IPERF","COMPLETED");
     		toastMessage(context.getString(R.string.ftp_success));
     	}
 
     	public void aborted() {
-    		Log.w("IPERF","ABORTED");
     		toastMessage(context.getString(R.string.ftp_aborted));
     	}
 
     	public void failed() {
-    		Log.w("IPERF","FAILED");
     		toastMessage(context.getString(R.string.ftp_failed));
     	}
-
     }
 	
 	public void toastMessage(String message) {
