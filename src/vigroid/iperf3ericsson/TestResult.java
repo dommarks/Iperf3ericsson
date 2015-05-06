@@ -108,8 +108,6 @@ public class TestResult {
 		dr.setDataPayloadSize(payloadSize);
 		dr.setIpAddress(ipAddress);
 		
-		//LocationHelper lh = new LocationHelper(context);
-		
 		dr.setConnectionType(LocationHelper.getNetworkClassName(context));
 		dr.setCarrierName(LocationHelper.CarrierName);
 		dr.setIMEINumber(LocationHelper.IMEINumber);

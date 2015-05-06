@@ -3,7 +3,6 @@ package vigroid.iperf3ericsson;
 import java.security.Timestamp;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 
 public class TestResultDetails {
