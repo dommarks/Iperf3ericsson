@@ -24,15 +24,17 @@ import android.widget.Toast;
  * Activity to show previous iperf tests run on device
  */
 public class PreviousTests extends Activity{
-	public static ArrayList<String> ArrayofTests = new ArrayList<String>();
-	public static ArrayAdapter<String> adapter;
+	private static ArrayList<String> arrayOfTests = new ArrayList<String>();
+	private ArrayAdapter<String> adapter;
 	private List<TestResultDetails> trdList;
+	
 	private GridView gridView;
 	private Button exportEmailButton;
 	private Button exportFTPButton;
 	private Button deleteAll;
 	
 	private IPerfDBHelper db;
+	
 	private boolean ftpInProgress;
 	private boolean deleteYes;
 	
@@ -41,15 +43,15 @@ public class PreviousTests extends Activity{
 		super.onCreate(savedInstanceState);
 		ftpInProgress = false;deleteYes = false;
 		db = new IPerfDBHelper(PreviousTests.this);
-		//trdList = db.getAllTests(); 
 		setContentView(R.layout.activity_test_history);
-		adapter = new ArrayAdapter<String>(PreviousTests.this,android.R.layout.simple_list_item_1, ArrayofTests);
-
-		// Reading all contacts
-		trdList = db.getAllTests();       
-        
-        //Log.w("IPERF","Number of tests = "+Integer.toString(db.getNumberOfTestsRun()));
-		gridView = (GridView) findViewById(R.id.gridView1);
+		
+		// Reading in all Tests run
+		ResultListAndObjects rl = db.getAllTests();
+		trdList = rl.getTestResultObjectArray();
+		arrayOfTests = rl.getTestNameandSpeedArray();
+		adapter = new ArrayAdapter<String>(PreviousTests.this,android.R.layout.simple_list_item_1, arrayOfTests);
+		
+  		gridView = (GridView) findViewById(R.id.gridView1);
         gridView.setAdapter(adapter);
         
 		runOnUiThread(new Runnable() {
@@ -59,12 +61,12 @@ public class PreviousTests extends Activity{
 		});
 		adapter.notifyDataSetChanged();
 		
+		/// *** Gridview Handler *** ///
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 	        @Override
 	        public void onItemClick(AdapterView<?> parent, View v,
 	                int position, long id) {
 	        	
-	        	Toast.makeText(PreviousTests.this, trdList.get(position).toString(), 5).show();
 	        	Intent intent = new Intent(getBaseContext(), ShowIndividualTest.class);
 	        	intent.putExtra("testID", trdList.get(position).getTestID().toString());
 	        	startActivity(intent);
@@ -73,7 +75,6 @@ public class PreviousTests extends Activity{
     
 		
         ///**Button Handlers**///
-        
         exportEmailButton = (Button) findViewById(R.id.exportButtonEmail);
         exportEmailButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -113,7 +114,9 @@ public class PreviousTests extends Activity{
 			public void onClick(View v) {
 				deleteDialog();
 				if (deleteYes){
-					trdList = db.getAllTests();
+					ResultListAndObjects rl = db.getAllTests();
+					trdList = rl.getTestResultObjectArray();
+					arrayOfTests = rl.getTestNameandSpeedArray();
 		            adapter.clear();
 			        deleteYes = false;
 				}
@@ -133,10 +136,7 @@ public class PreviousTests extends Activity{
 		        case DialogInterface.BUTTON_POSITIVE:
 		            db.deleteAllRecords();
 		            deleteYes = true;
-//		    		adapter = new ArrayAdapter<String>(this,
-//		                    android.R.layout.simple_list_item_1, ArrayofTests);
 		            break;
-
 		        case DialogInterface.BUTTON_NEGATIVE:
 		            break;
 		        }

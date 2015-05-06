@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 //// See http://opencsv.sourceforge.net/ for OpenCSV licenses (under Apache 2.0 - http://www.apache.org/licenses/LICENSE-2.0) and information /////
 /**
@@ -169,15 +170,9 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
       * Method for PreviousTests.java. Returns a list of all tests run, and updates a list of timestamps and 
       * average speeds for display in PreviousTests.java 
       */
-    public List<TestResultDetails> getAllTests() {
+    public ResultListAndObjects getAllTests() {
+    	ArrayList<String> arrayOfTests = new ArrayList<String>();
         List<TestResultDetails> testResultList = new ArrayList<TestResultDetails>();
-        
-        if (PreviousTests.ArrayofTests != null){
-        	PreviousTests.ArrayofTests.clear();
-        	}
-        if (PreviousTests.adapter!=null){
-        	PreviousTests.adapter.clear();
-        }
         
         // Select All Query
         String selectQuery = "SELECT  * FROM " + testTable;
@@ -204,18 +199,17 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
             	trd.setIpAddress(cursor.getString(14));
             
                 String name = cursor.getString(1)+" Speed: "+String.format("%.2f", Double.valueOf(cursor.getString(10)));
-                PreviousTests.adapter.add(name);
-                //PreviousTests.ArrayofTests.add(name);
+                arrayOfTests.add(name);
                 testResultList.add(trd);
             } while (cursor.moveToNext());
         }
         db.close();
-        return testResultList;
+        return new ResultListAndObjects(testResultList,arrayOfTests);
     }
     
     public void deleteRecord(String testID){
     	SQLiteDatabase db = this.getReadableDatabase();
-    	db.delete(testTable, colTestID + "=" + testID, null);
+    	db.delete(testTable, colTestID + "=?", new String[] {testID});
     	db.close();
     }
     
