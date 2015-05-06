@@ -2,14 +2,20 @@ package vigroid.iperf3ericsson;
 
 
 import java.io.File;
+import java.io.Serializable;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 
-public class TestSubject {
+public class TestSubject implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public final int MAX_TEST_DURATION = 100;
 	
 	public boolean isEmpty;
@@ -24,9 +30,10 @@ public class TestSubject {
 	
 	//GPS related
 	private boolean isGetLocation;
+	public String[] location = new String[2];
 	
+	//others
 	private Context context;
-	
 	private File testResultJson;
 	
 	public TestSubject(Context context) {

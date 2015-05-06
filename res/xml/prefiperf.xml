@@ -1,72 +1,76 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory 
-        android:title="@string/setting_group_title1">
-        
-        <EditTextPreference 
-            android:key="@string/setting_number1_key"
-            android:title="@string/setting_number1"
-            android:summary="@string/setting_server_description"
-            android:defaultValue="@string/setting_number1_default"/>
-        
-        <EditTextPreference 
-            android:key="@string/setting_number2_key"
-            android:title="@string/setting_number2"
-            android:summary="@string/setting_port_description"
-            android:defaultValue="@string/setting_number2_default"/>
-        
-        <EditTextPreference 
-            android:key="@string/setting_number3_key"
-            android:title="@string/setting_number3"
-            android:summary="@string/setting_duration_description"
-            android:defaultValue="@string/setting_number3_default"/>
-        <ListPreference 
-            android:key="@string/setting_number4_key"
-            android:title="@string/setting_number4"
-            android:defaultValue="@string/setting_number4_default"
-            android:entryValues="@array/test_type_values"
-            android:entries="@array/test_type_array"/>
-       <ListPreference 
-            android:key="@string/setting_number10_key"
-            android:title="@string/setting_number4"
-            android:defaultValue="@string/setting_number10_default"
-            android:entryValues="@array/test_type_values"
-            android:entries="@array/test_type_array"/>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <PreferenceCategory android:title="@string/setting_group_title1" >
+        <EditTextPreference
+            android:defaultValue="@string/setting_number1_default"
+            android:key="@string/setting_number1_key"
+            android:summary="@string/setting_server_description"
+            android:title="@string/setting_number1" />
+        <EditTextPreference
+            android:defaultValue="@string/setting_number2_default"
+            android:key="@string/setting_number2_key"
+            android:summary="@string/setting_port_description"
+            android:title="@string/setting_number2" />
+        <EditTextPreference
+            android:defaultValue="@string/setting_number3_default"
+            android:key="@string/setting_number3_key"
+            android:summary="@string/setting_duration_description"
+            android:title="@string/setting_number3" />
+
+        <ListPreference
+            android:defaultValue="@string/setting_number4_default"
+            android:entries="@array/test_type_array"
+            android:entryValues="@array/test_type_values"
+            android:key="@string/setting_number4_key"
+            android:title="@string/setting_number4" />
     </PreferenceCategory>
-    
-    <PreferenceCategory 
-        android:title="@string/setting_group_title2">
-        
+    <PreferenceCategory android:title="@string/setting_group_title2" >
         <CheckBoxPreference
+            android:defaultValue="true"
             android:key="@string/setting_number5_key"
-            android:title="@string/setting_number5"
             android:summary="@string/setting_location_description"
-            android:defaultValue="true"/>
-        
-		<ListPreference 
-            android:key="@string/setting_number6_key"
-            android:title="@string/setting_number6"
+            android:title="@string/setting_number5" />
+
+        <EditTextPreference
+            android:defaultValue="ftp.barracudasalad.com"
+            android:key="ftpServer"
+            android:title="FTP Server" />
+        <EditTextPreference
+            android:defaultValue="iperftest@barracudasalad.com"
+            android:key="ftpUserName"
+            android:title="FTP user name" />
+        <EditTextPreference
+            android:defaultValue="P@$$W0rd"
+            android:key="ftpPassword"
+            android:title="FTP password" />
+        <EditTextPreference
+            android:defaultValue="21"
+            android:key="ftpPort"
+            android:title="FTP port" />
+        <ListPreference
             android:defaultValue="@string/setting_number6_default"
+            android:entries="@array/unit_type_arrays"
             android:entryValues="@array/unit_type_values"
-            android:entries="@array/unit_type_arrays"/>
-		<ListPreference 
-            android:key="@string/setting_number7_key"
-            android:title="@string/setting_number7"
+            android:key="@string/setting_number6_key"
+            android:title="@string/setting_number6" />
+        <ListPreference
             android:defaultValue="@string/setting_number7_default"
+            android:entries="@array/font_size_arrays"
             android:entryValues="@array/font_size_values"
-            android:entries="@array/font_size_arrays"/>
-		<ListPreference 
-            android:key="@string/setting_number8_key"
-            android:title="@string/setting_number8"
+            android:key="@string/setting_number7_key"
+            android:title="@string/setting_number7" />
+        <ListPreference
             android:defaultValue="@string/setting_number8_default"
+            android:entries="@array/graph_type_arrays"
             android:entryValues="@array/graph_type_values"
-            android:entries="@array/graph_type_arrays"/>
-		<ListPreference 
-            android:key="@string/setting_number9_key"
-            android:title="@string/setting_number9"
+            android:key="@string/setting_number8_key"
+            android:title="@string/setting_number8" />
+        <ListPreference
             android:defaultValue="@string/setting_number9_default"
+            android:entries="@array/font_size_arrays"
             android:entryValues="@array/font_size_values"
-            android:entries="@array/font_size_arrays"/>
-        
+            android:key="@string/setting_number9_key"
+            android:title="@string/setting_number9" />
     </PreferenceCategory>
+
 </PreferenceScreen>

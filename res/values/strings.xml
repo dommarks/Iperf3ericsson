@@ -5,13 +5,19 @@
     <string name="setting_name">Setting</string>
     <string name="hello_world">This is Spar!Hello world!!</string>
     <string name="action_settings">Settings</string>
-	<string name="action_credits">Credits</string>
+    <string name="action_credits">Credits</string>
     <string name="run_iperf_button">Run</string>
     <string name="grape_type_prompt">Choose a graph</string>
+    <string name="summary_button">Summary</string>
+    
+    
     <string name="run_continuously">Run Constant Tests</string>
     <string name="stop_tests">Stop Testing</string>
     
-    <string name="previousTestsButtonText">View Previous Tests</string>
+    <string name="title_section1">Detail</string>
+    <string name="title_section2">History</string>
+    
+        <string name="previousTestsButtonText">View Previous Tests</string>
     <string name="testisrunning">Test is Running</string>
     <string name="export_email_button">Export via Email</string>
     <string name="export_ftp_button">Export via FTP</string>
@@ -33,57 +39,50 @@
     <string name="email_address"></string>
     <string name="email_subject">IPERF Test Results</string>
     <string name="email_body">Attached are IPERF test results</string>
-    
+
     <string-array name="graph_type_arrays">
         <item>Bar Chart</item>
         <item>Line Chart</item>
         <item>Cubic Line_Chart</item>
         <item>Area Chart</item>
     </string-array>
-    
     <string-array name="graph_type_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
-    
     <string-array name="test_type_array">
         <item>Upload</item>
         <item>Download</item>
     </string-array>
-    
     <string-array name="test_type_values">
         <item>upload</item>
         <item>download</item>
     </string-array>
-    
     <string-array name="unit_type_arrays">
         <item>Kbit/s</item>
         <item>KByte/s</item>
         <item>Mbit/s</item>
         <item>MByte/s</item>
     </string-array>
-    
     <string-array name="unit_type_values">
         <item>Kb</item>
         <item>KB</item>
         <item>Mb</item>
         <item>MB</item>
     </string-array>
-    
     <string-array name="font_size_arrays">
         <item>Small</item>
         <item>Mid</item>
         <item>Large</item>
     </string-array>
-    
     <string-array name="font_size_values">
         <item>S</item>
         <item>M</item>
         <item>L</item>
     </string-array>
-    
+
     <string name="setting_group_title1">iPref Configurations</string>
     <string name="setting_number1">Server Address</string>
     <string name="setting_server_description">Default Sever is coneye.myqnapcloud.com</string>
@@ -93,15 +92,13 @@
     <string name="setting_duration_description">Unit is second, default value is 5</string>
     <string name="setting_number4">Test Type</string>
     <string name="setting_group_title2">App Configurations</string>
-    <string name="setting_number10">Duration</string>
-    <string name="setting_multipleTests_description">Time in seconds to wait between tests when running continuous testing</string>
     <string name="setting_number5">Get Your Location</string>
     <string name="setting_location_description">You can turn it off if you have privacy concerns</string>
     <string name="setting_number6">Display Unit</string>
     <string name="setting_number7">Chart Font Size</string>
     <string name="setting_number8">Default Chart Type</string>
     <string name="setting_number9">Summary Font Size</string>
-    
+
     <!-- default values for setting -->
     <string name="setting_number1_default">coneye.myqnapcloud.com</string>
     <string name="setting_number2_default">5201</string>
@@ -112,19 +109,17 @@
     <string name="setting_number7_default">M</string>
     <string name="setting_number8_default">0</string>
     <string name="setting_number9_default">M</string>
-    <string name="setting_number10_default">10</string>
-    
-    <!-- might need add tranlatable to false if we have locationizational plans  -->
+
+    <!-- might need add tranlatable to false if we have locationizational plans -->
     <string name="setting_number1_key">serverAddress</string>
     <string name="setting_number2_key">port</string>
     <string name="setting_number3_key">duration</string>
     <string name="setting_number4_key">testType</string>
-    <string name="setting_number10_key">timeBetweenTests</string>
     <string name="setting_number5_key">isGetLocation</string>
     <string name="setting_number6_key">unit</string>
     <string name="setting_number7_key">chartFontSize</string>
-    <string name="setting_number8_key">chartDefault</string>
+    <string name="setting_number8_key">chartDefaultType</string>
     <string name="setting_number9_key">summaryFontSize</string>
-    
+    <string name="title_activity_summary">SummaryActivity</string>
 
 </resources>

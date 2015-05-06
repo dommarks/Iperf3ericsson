@@ -25,28 +25,33 @@
 
 	</LinearLayout>
 
-<Button
-    android:id="@+id/previousTestButton"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentLeft="true"
-    android:layout_below="@+id/chart"
-    android:text="@string/previousTestsButtonText" />
+    <Button
+        android:id="@+id/summaryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/chart"
+        android:layout_below="@+id/chart"
+        android:text="@string/summary_button" />
+
+    <Button
+        android:id="@+id/runMultipleTests"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/drawGraphButton"
+        android:layout_alignBottom="@+id/drawGraphButton"
+        android:layout_marginRight="24dp"
+        android:layout_toLeftOf="@+id/summaryButton"
+        android:text="Continuous" />
 
     <Button
         android:id="@+id/drawGraphButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/chart"
+        android:layout_marginBottom="42dp"
+        android:layout_marginRight="14dp"
+        android:layout_toLeftOf="@+id/button1"
         android:text="@string/run_iperf_button" />
-
-    <Button
-        android:id="@+id/runMultipleTests"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/chart"
-        android:layout_toLeftOf="@+id/drawGraphButton"
-        android:text="@string/run_continuously" />
 
 </RelativeLayout>

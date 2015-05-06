@@ -13,58 +13,56 @@ import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 /* Gets device location.
  * @TODO add handling for GPS turned off, network location, and delayed updates.
  */
-public class LocationHelper{
-	
-	//Initialized on class start
-	private  LocationManager lm; 
-	private Location location;
-	private Location locationNetwork;
+public class LocationHelper {
+
+	// Initialized on class start
 	public static double longitude;
 	public static double latitude;
+	private IperfLocationListener mlocListener;
+	private LocationManager mlocManager;
 	private static long locationTimestamp = 0;
+	private boolean isListening;
+	private Context context;
 	public static String IMEINumber;
 	public static String CarrierName;
 	public static String DEVICE_NAME;
-	private IperfLocationListener mlocListener;
-	private LocationManager mlocManager;
-	private boolean isListening;
-	private Context context;
-	
-	public LocationHelper(Context context){
-		longitude = 0; latitude = 0;
+
+	public LocationHelper(Context context) {
+		longitude = 0;
+		latitude = 0;
 		this.context = context;
-		//LocationManager mlocManager=null;
-        //LocationListener mlocListener;
-        mlocManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-        mlocListener = new IperfLocationListener();
-       mlocManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, mlocListener);
-       isListening = true;
-
-       if (mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-           if(IperfLocationListener.latitude>0)
-           {
-                latitude= IperfLocationListener.latitude;
-                longitude = IperfLocationListener.longitude;
-            }
-            else
-            {
-            	latitude = -1;
-            	longitude = -1;
-             }
-         } else {
-            // et_field_name.setText("GPS is not turned on...");
-         }
-
-		
-		//Setting carrier name
+		// LocationManager mlocManager=null;
+		// LocationListener mlocListener;
+		mlocManager = (LocationManager) context
+				.getSystemService(Context.LOCATION_SERVICE);
+		mlocListener = new IperfLocationListener();
+		mlocManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 0,
+				mlocListener);
+		isListening = true;
 		TelephonyManager manager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
 		CarrierName = manager.getNetworkOperatorName();
 		IMEINumber = manager.getDeviceId();
-		DEVICE_NAME = generateDeviceName(); 
+		DEVICE_NAME = generateDeviceName();
+
+		if (mlocManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			if (IperfLocationListener.latitude > 0) {
+				Toast.makeText(context, "fetching", Toast.LENGTH_LONG).show();
+				latitude = IperfLocationListener.latitude;
+				longitude = IperfLocationListener.longitude;
+			} else {
+				latitude = mlocManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLatitude();
+				longitude = mlocManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLongitude();
+			}
+		} else {
+			// et_field_name.setText("GPS is not turned on...");
+			latitude = mlocManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLatitude();
+			longitude = mlocManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER).getLongitude();
+		}
 	}
 	
 	public void startLocationListening(){
@@ -93,7 +91,6 @@ public class LocationHelper{
 	public String getLocationTimestamp(){
 		return Double.toString(locationTimestamp);
 	}
-	
 	public String getIMEI(){
 		return IMEINumber;
 	}
@@ -116,7 +113,6 @@ public class LocationHelper{
 		}
 		return connManager.getActiveNetworkInfo().getTypeName()+" - "+connManager.getActiveNetworkInfo().getSubtypeName()+" - "+connManager.getActiveNetworkInfo().getExtraInfo();
 	}
-	
 	public static String generateDeviceName() {
 	    final String manufacturer = Build.MANUFACTURER;
 	    final String model = Build.MODEL;

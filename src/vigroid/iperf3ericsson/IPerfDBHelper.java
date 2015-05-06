@@ -14,7 +14,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 //// See http://opencsv.sourceforge.net/ for OpenCSV licenses (under Apache 2.0 - http://www.apache.org/licenses/LICENSE-2.0) and information /////
 /**
@@ -89,7 +88,6 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
     /// CRUD OPERATIONS ///
     
     public void insertRecords(TestResultDetails dr){
-    	Log.w("IPERF","insertRecords "+dr.getTimestamp());
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues cv = new ContentValues(); 
 		

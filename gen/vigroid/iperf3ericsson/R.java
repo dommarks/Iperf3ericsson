@@ -39,102 +39,109 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_credits=0x7f0b000e;
-        public static final int action_settings=0x7f0b000d;
-        public static final int activity_test_history=0x7f0b0008;
+        public static final int action_credits=0x7f0b0011;
+        public static final int action_settings=0x7f0b0010;
+        public static final int activity_summary=0x7f0b0009;
+        public static final int activity_test_history=0x7f0b000a;
+        public static final int button1=0x7f0b0008;
         public static final int chart=0x7f0b0004;
-        public static final int deleteButton=0x7f0b000c;
+        public static final int deleteButton=0x7f0b000e;
         public static final int delete_test=0x7f0b0001;
         public static final int drawGraphButton=0x7f0b0005;
-        public static final int exportButtonEmail=0x7f0b000a;
-        public static final int exportButtonFTP=0x7f0b000b;
+        public static final int exportButtonEmail=0x7f0b000c;
+        public static final int exportButtonFTP=0x7f0b000d;
         public static final int go_back=0x7f0b0002;
         public static final int graph_select_spinner=0x7f0b0003;
-        public static final int gridView1=0x7f0b0009;
+        public static final int gridView1=0x7f0b000b;
         public static final int individualTestView=0x7f0b0000;
-        public static final int previousTestButton=0x7f0b0006;
         public static final int runMultipleTests=0x7f0b0007;
+        public static final int summary=0x7f0b000f;
+        public static final int summaryButton=0x7f0b0006;
     }
     public static final class layout {
         public static final int activity_individual_test=0x7f030000;
         public static final int activity_main=0x7f030001;
-        public static final int activity_test_history=0x7f030002;
+        public static final int activity_summary=0x7f030002;
+        public static final int activity_test_history=0x7f030003;
+        public static final int detail_layout=0x7f030004;
+        public static final int history_layout=0x7f030005;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
+        public static final int summary=0x7f0a0001;
     }
     public static final class string {
         public static final int action_credits=0x7f080004;
         public static final int action_settings=0x7f080003;
         public static final int app_name=0x7f080000;
-        public static final int cancel=0x7f080013;
-        public static final int delete_all_ask=0x7f080011;
-        public static final int delete_all_records=0x7f080010;
-        public static final int delete_all_yes=0x7f080012;
-        public static final int delete_this_test=0x7f080014;
-        public static final int email_address=0x7f08001a;
-        public static final int email_body=0x7f08001c;
-        public static final int email_subject=0x7f08001b;
-        public static final int export_email_button=0x7f08000b;
-        public static final int export_ftp_button=0x7f08000c;
-        public static final int export_ftp_button_in_progress=0x7f08000d;
-        public static final int ftp_aborted=0x7f080018;
-        public static final int ftp_failed=0x7f080019;
-        public static final int ftp_start=0x7f080016;
-        public static final int ftp_success=0x7f080017;
-        public static final int go_back=0x7f080015;
+        public static final int cancel=0x7f080016;
+        public static final int delete_all_ask=0x7f080014;
+        public static final int delete_all_records=0x7f080013;
+        public static final int delete_all_yes=0x7f080015;
+        public static final int delete_this_test=0x7f080017;
+        public static final int email_address=0x7f08001d;
+        public static final int email_body=0x7f08001f;
+        public static final int email_subject=0x7f08001e;
+        public static final int export_email_button=0x7f08000e;
+        public static final int export_ftp_button=0x7f08000f;
+        public static final int export_ftp_button_in_progress=0x7f080010;
+        public static final int ftp_aborted=0x7f08001b;
+        public static final int ftp_failed=0x7f08001c;
+        public static final int ftp_start=0x7f080019;
+        public static final int ftp_success=0x7f08001a;
+        public static final int go_back=0x7f080018;
         public static final int grape_type_prompt=0x7f080006;
         public static final int hello_world=0x7f080002;
-        public static final int previousTestsButtonText=0x7f080009;
-        public static final int run_continuously=0x7f080007;
+        public static final int previousTestsButtonText=0x7f08000c;
+        public static final int run_continuously=0x7f080008;
         public static final int run_iperf_button=0x7f080005;
-        public static final int run_tests_first=0x7f08000e;
-        public static final int setting_duration_description=0x7f080023;
-        public static final int setting_group_title1=0x7f08001d;
-        public static final int setting_group_title2=0x7f080025;
-        public static final int setting_location_description=0x7f080029;
-        public static final int setting_multipleTests_description=0x7f080027;
+        public static final int run_tests_first=0x7f080011;
+        public static final int setting_duration_description=0x7f080026;
+        public static final int setting_group_title1=0x7f080020;
+        public static final int setting_group_title2=0x7f080028;
+        public static final int setting_location_description=0x7f08002a;
         public static final int setting_name=0x7f080001;
-        public static final int setting_number1=0x7f08001e;
-        public static final int setting_number10=0x7f080026;
-        public static final int setting_number10_default=0x7f080036;
-        public static final int setting_number10_key=0x7f08003b;
+        public static final int setting_number1=0x7f080021;
         /**  default values for setting 
          */
-        public static final int setting_number1_default=0x7f08002e;
-        /**  might need add tranlatable to false if we have locationizational plans  
+        public static final int setting_number1_default=0x7f08002f;
+        /**  might need add tranlatable to false if we have locationizational plans 
          */
         public static final int setting_number1_key=0x7f080037;
-        public static final int setting_number2=0x7f080020;
-        public static final int setting_number2_default=0x7f08002f;
+        public static final int setting_number2=0x7f080023;
+        public static final int setting_number2_default=0x7f080030;
         public static final int setting_number2_key=0x7f080038;
-        public static final int setting_number3=0x7f080022;
-        public static final int setting_number3_default=0x7f080030;
+        public static final int setting_number3=0x7f080025;
+        public static final int setting_number3_default=0x7f080031;
         public static final int setting_number3_key=0x7f080039;
-        public static final int setting_number4=0x7f080024;
+        public static final int setting_number4=0x7f080027;
         /**  0 is upload, 1 is download, 2 is both(may not use this option) 
          */
-        public static final int setting_number4_default=0x7f080031;
+        public static final int setting_number4_default=0x7f080032;
         public static final int setting_number4_key=0x7f08003a;
-        public static final int setting_number5=0x7f080028;
-        public static final int setting_number5_key=0x7f08003c;
-        public static final int setting_number6=0x7f08002a;
-        public static final int setting_number6_default=0x7f080032;
-        public static final int setting_number6_key=0x7f08003d;
-        public static final int setting_number7=0x7f08002b;
-        public static final int setting_number7_default=0x7f080033;
-        public static final int setting_number7_key=0x7f08003e;
-        public static final int setting_number8=0x7f08002c;
-        public static final int setting_number8_default=0x7f080034;
-        public static final int setting_number8_key=0x7f08003f;
-        public static final int setting_number9=0x7f08002d;
-        public static final int setting_number9_default=0x7f080035;
-        public static final int setting_number9_key=0x7f080040;
-        public static final int setting_port_description=0x7f080021;
-        public static final int setting_server_description=0x7f08001f;
-        public static final int stop_tests=0x7f080008;
-        public static final int testisrunning=0x7f08000a;
-        public static final int unable_to_attach=0x7f08000f;
+        public static final int setting_number5=0x7f080029;
+        public static final int setting_number5_key=0x7f08003b;
+        public static final int setting_number6=0x7f08002b;
+        public static final int setting_number6_default=0x7f080033;
+        public static final int setting_number6_key=0x7f08003c;
+        public static final int setting_number7=0x7f08002c;
+        public static final int setting_number7_default=0x7f080034;
+        public static final int setting_number7_key=0x7f08003d;
+        public static final int setting_number8=0x7f08002d;
+        public static final int setting_number8_default=0x7f080035;
+        public static final int setting_number8_key=0x7f08003e;
+        public static final int setting_number9=0x7f08002e;
+        public static final int setting_number9_default=0x7f080036;
+        public static final int setting_number9_key=0x7f08003f;
+        public static final int setting_port_description=0x7f080024;
+        public static final int setting_server_description=0x7f080022;
+        public static final int stop_tests=0x7f080009;
+        public static final int summary_button=0x7f080007;
+        public static final int testisrunning=0x7f08000d;
+        public static final int title_activity_summary=0x7f080040;
+        public static final int title_section1=0x7f08000a;
+        public static final int title_section2=0x7f08000b;
+        public static final int unable_to_attach=0x7f080012;
     }
     public static final class style {
         /** 
