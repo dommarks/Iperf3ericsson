@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -24,6 +25,9 @@ public class FetchingTask extends AsyncTask<Object, Void, String> {
 	private Spinner graphSpinner;
 	private View mChartView;
 	private LinearLayout chartContainer;
+	
+	private Runnable runnable;
+	private Handler handler;
 	
 
 	public FetchingTask(Context context, TestSubject test,

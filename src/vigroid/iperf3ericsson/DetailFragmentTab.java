@@ -19,10 +19,11 @@ public class DetailFragmentTab extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		IPerfDBHelper db = new IPerfDBHelper(getActivity());
 		// TODO Auto-generated method stub
 		View rootView = inflater.inflate(R.layout.detail_layout, container,false);
 		textView=(TextView) rootView.findViewById(R.id.summary);
-		TestResultDetails trd= new TestResultDetails("sdcard/iPerfResult.json",getActivity().getApplicationContext());
+		TestResultDetails trd= db.getMostRecentTest();
 		textView.setText(trd.toStringFormatted());
 		
 		return rootView;

@@ -11,8 +11,9 @@
     <string name="summary_button">Summary</string>
     
     
-    <string name="run_continuously">Run Constant Tests</string>
+    <string name="run_continuously">Run Looping Tests</string>
     <string name="stop_tests">Stop Testing</string>
+    <string name="tests_are_running">Test Loop ON</string>
     
     <string name="title_section1">Detail</string>
     <string name="title_section2">History</string>

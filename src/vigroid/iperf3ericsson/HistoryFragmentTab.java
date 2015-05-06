@@ -9,6 +9,7 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.DocumentsContract.Root;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -43,7 +45,6 @@ public class HistoryFragmentTab extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		View rootView = inflater.inflate(R.layout.history_layout, container,
 				false);
 		currentContext = getActivity().getApplicationContext();
@@ -57,6 +58,7 @@ public class HistoryFragmentTab extends Fragment {
 
 		gridView = (GridView) rootView.findViewById(R.id.gridView1);
 		gridView.setAdapter(adapter);
+		
 		// / *** Gridview Handler *** ///
 		gridView.setOnItemClickListener(new OnItemClickListener() {
 			@Override

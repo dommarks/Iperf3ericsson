@@ -3,13 +3,16 @@
     android:id="@+id/activity_test_history"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="#111111"
+    android:textColor="#000000" >
 
     <GridView
         android:id="@+id/gridView1"
         android:layout_width="match_parent"
         android:layout_height="282dp"
         android:layout_weight="0.14"
+        android:textColor="#000000"
         android:numColumns="3" >
 
     </GridView>
@@ -18,12 +21,14 @@
         android:id="@+id/exportButtonEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#999999"
         android:text="@string/export_email_button" />
 
     <Button
         android:id="@+id/exportButtonFTP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#AAAAAA"
         android:text="@string/export_ftp_button" />
 
     <Button
@@ -31,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.06"
+        android:background="#BBBBBB"
         android:text="@string/delete_all_records" />
 
 </LinearLayout>

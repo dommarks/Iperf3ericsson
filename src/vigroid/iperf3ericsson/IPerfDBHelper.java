@@ -165,6 +165,35 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
      }
     
      /*
+      * Returns number of tests in DB
+      */
+         public TestResultDetails getMostRecentTest() {
+         	SQLiteDatabase db = this.getWritableDatabase();
+            String selectQuery = "SELECT  * FROM " + testTable;
+         	Cursor cursor = db.rawQuery(selectQuery, null);
+         	TestResultDetails trd = new TestResultDetails();
+         	if (cursor.moveToLast()){
+         			cursor.moveToLast();
+                    trd.setTestID(cursor.getString(0));
+                    trd.setTimestamp(cursor.getString(1));
+                	trd.setConnectionType(cursor.getString(2));
+                	trd.setCarrierName(cursor.getString(3));
+                	trd.setIMEINumber(cursor.getString(4));
+                	trd.setModelNumber(cursor.getString(5));
+                	trd.setLongtitude(cursor.getString(7));
+                	trd.setLatitude(cursor.getString(6));
+                	trd.setServerName(cursor.getString(8));
+                	trd.setPortNumber(cursor.getString(9));
+                	trd.setAverageSpeed(cursor.getString(10));
+                	trd.setDataPayloadSize(cursor.getString(11));
+                	trd.setPingTime(cursor.getString(12));
+                	trd.setCpuUtilization(cursor.getString(13));
+                	trd.setIpAddress(cursor.getString(14));
+         		}
+             return trd;
+         }
+         
+     /*
       * Method for PreviousTests.java. Returns a list of all tests run, and updates a list of timestamps and 
       * average speeds for display in PreviousTests.java 
       */
@@ -231,7 +260,7 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
 
         	boolean headerWritten = false;
         	if (cursor.moveToFirst()) {
-        		while (cursor.moveToNext()) {
+        		do {
         			///Writing CSV file header
         			if (headerWritten==false){
         				String tempheader = 
@@ -277,7 +306,7 @@ public class IPerfDBHelper extends SQLiteOpenHelper {
         			
         			String[] testEntry = tempdata.split("#");
         			writer.writeNext(testEntry);
-        		}
+        		}while (cursor.moveToNext());
         	}
         	db.close();
         	writer.close();

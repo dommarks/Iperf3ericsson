@@ -14,6 +14,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -29,6 +30,9 @@ public class MainActivity extends Activity {
 	private Runnable runnable;
 	private Handler handler;
 	private Button runMultipleTestsButton;
+	private Button stopTestsButton;
+	private Button draw_Graph_button;
+	private Button summary_Button;
 	private boolean runTests = false;
 	private LocationHelper lh;
 
@@ -44,45 +48,71 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_main);
-		//lh = new LocationHelper(getBaseContext());
-
 		graphSpinner = (Spinner) findViewById(R.id.graph_select_spinner);
-
 		pref = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
-
 		graphSpinner.setSelection(Integer.parseInt(pref.getString(
 				"chartDefaultType", "0")));
-
 		chartContainer = (LinearLayout) findViewById(R.id.chart);
-
-		Button draw_Graph_button = (Button) findViewById(R.id.drawGraphButton);
-		// Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT)
-
+		
+		runMultipleTestsButton = (Button) findViewById(R.id.runMultipleTests);
+		draw_Graph_button = (Button) findViewById(R.id.drawGraphButton);
+		stopTestsButton = (Button) findViewById(R.id.stopTestsButton);
+		summary_Button = (Button) findViewById(R.id.summaryButton);
+		
 		draw_Graph_button.setOnClickListener(new View.OnClickListener() {
-
+			
 			@Override
 			public void onClick(View v) {
-
 				test = new TestSubject(getApplicationContext());
-
 				fetchingTask = new FetchingTask(MainActivity.this, test,
 						graphSpinner, mChartView, chartContainer);
 				fetchingTask.execute();
-
 			}
 		});
 		
-		runMultipleTestsButton = (Button) findViewById(R.id.runMultipleTests);
+		stopTestsButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if(fetchingTask!=null){
+					fetchingTask.cancel(true);
+				}
+				if (handler!=null){
+					handler.removeCallbacks(runnable);
+				}
+				runMultipleTestsButton.setText(R.string.run_continuously);
+			}
+		});
+		
 		runMultipleTestsButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
+				
+				if (!runTests){
+					runTests = true;
+					handler = new Handler();
+					runnable = new Runnable() {
+					    public void run() {
+					    		test = new TestSubject(getApplicationContext());
+					    		fetchingTask = new FetchingTask(MainActivity.this, test,
+					    				graphSpinner, mChartView, chartContainer);
+					    		runMultipleTestsButton.setText(R.string.tests_are_running);
+					    		fetchingTask.execute();
+					    		handler.postDelayed(this, 12000);
+					    }
+					};
+					handler.postDelayed(runnable, 1);	
+				}else{
+				runMultipleTestsButton.setText(R.string.run_continuously);	
+				handler.removeCallbacks(runnable);
 				fetchingTask.cancel(true);
+				runTests=false;
+				}
 			}
 		});
 
@@ -102,15 +132,18 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		Button summary_Button = (Button) findViewById(R.id.summaryButton);
-
 		summary_Button.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// start new activity
+				IPerfDBHelper db = new IPerfDBHelper(MainActivity.this);
+				if(db.getNumberOfTestsRun()>0){
 				startActivity(new Intent(MainActivity.this,
 						SummaryActivity.class));
+				}else{
+					Toast.makeText(MainActivity.this, R.string.run_tests_first, Toast.LENGTH_LONG).show();
+				}
 
 			}
 		});
