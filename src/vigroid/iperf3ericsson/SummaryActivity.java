@@ -2,13 +2,9 @@ package vigroid.iperf3ericsson;
 
 
 import android.app.ActionBar;
-import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.widget.Toast;
 
 
 

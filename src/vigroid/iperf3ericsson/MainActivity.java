@@ -34,7 +34,6 @@ public class MainActivity extends Activity {
 	private Button draw_Graph_button;
 	private Button summary_Button;
 	private boolean runTests = false;
-	private LocationHelper lh;
 
 	@Override
 	protected void onRestart() {
