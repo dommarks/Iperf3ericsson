@@ -96,12 +96,14 @@ public class TestResultDetails extends TestResult {
 			this.cpuUtilization = jsonCPU.getString("host_total");
 
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			Log.w("IPERF", "JSON Error = " + e.toString());
+			e.printStackTrace();
 		}
 
 	}
 
+	/*
+	 * Gets pingtime after running a test
+	 */
 	private String ping(String url) {
 		long startTime = 0;
 		long endTime = 0;
@@ -118,6 +120,9 @@ public class TestResultDetails extends TestResult {
 		return result;
 	}
 
+	/*
+	 * Gets static information about the phone
+	 */
 	private void cellphoneInfoForTestResult(){
 		TelephonyManager manager = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
 		this.carrierName = manager.getNetworkOperatorName();
@@ -126,10 +131,12 @@ public class TestResultDetails extends TestResult {
 		this.connectionType = getNetworkClassName(context);
 	}
 	
+	/*
+	 * Gets the type of network and speed being used.
+	 */
 	private String getNetworkClassName(Context context){
 		ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-		Log.w("IPERF","NETWORK INFO = "+connManager.getActiveNetworkInfo().getSubtypeName());
 		
 		if (mWifi.isConnected()){
 			WifiManager WifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
@@ -154,6 +161,9 @@ public class TestResultDetails extends TestResult {
 	    return capitalize(manufacturer) + " " + model;
 	}
 	
+	/*
+	 * Utility method
+	 */
 	private String capitalize(String str) {
 	    if (TextUtils.isEmpty(str)) {
 	        return str;

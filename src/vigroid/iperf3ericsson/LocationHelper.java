@@ -101,7 +101,6 @@ public class LocationHelper {
 	public static String getNetworkClassName(Context context){
 		ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-		Log.w("IPERF","NETWORK INFO = "+connManager.getActiveNetworkInfo().getSubtypeName());
 		
 		if (mWifi.isConnected()){
 			WifiManager WifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);

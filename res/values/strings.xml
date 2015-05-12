@@ -27,6 +27,7 @@
     <string name="unable_to_attach">Error. Unable to attach file</string>
 	<string name="delete_all_records">Delete all records</string>
     <string name="delete_all_ask">This will delete all previous test records. This can not be reversed. Are you sure you want to delete all?</string>
+    <string name="delete_individual_test_ask">This will delete this test record. This can not be reversed. Are you sure you want to delete all?</string>
     <string name="delete_all_yes">DELETE RECORDS</string>
     <string name="cancel">Cancel</string>
     <string name="delete_this_test">Delete this test</string>
